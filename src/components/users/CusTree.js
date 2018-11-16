@@ -17,8 +17,13 @@ class userTree extends Component {
     /** 
      * 处理节点选中事件
     */
-    handleSelect = (item) => {
-        
+    handleSelect = (key, selectedNode) => {
+        this.props.dispatch(
+            {
+                type: 'tree/updateCurrentNode',
+                data: selectedNode.node.props.dataRef
+            }
+        );
     }
     /** 
      * 获取节点数据
@@ -50,7 +55,7 @@ class userTree extends Component {
                 );
             }
 
-            return (<TreeNode {...item} dataRef={item} />);
+            return (<TreeNode {...item} dataRef={item} key={item.id} />);
         })
     }
     render() {

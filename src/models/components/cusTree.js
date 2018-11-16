@@ -5,6 +5,7 @@ export default {
 
     state: {
         data: [],
+        currentStore: null
     },
 
     reducers: {
@@ -27,6 +28,12 @@ export default {
             return {
                 ...state,
                 data: data || []
+            }
+        },
+        updateCurrentNode(state, action) {
+            return {
+                ...state,
+                currentStore: action.data
             }
         }
     },

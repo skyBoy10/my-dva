@@ -61,7 +61,7 @@ export default {
                 menus: action.data,
                 selectedMenu: action.data[0].nickName,
                 currentUser: currentUser
-            }
+            };
         },
         updateCollapsed(state, action) {
             return {
@@ -69,10 +69,16 @@ export default {
             }
         },
         updateState(state, action) {
+            let menuKey = '';
+            if(action.data.pathname) {
+                const arrs = action.data.pathname.split('/');
+                menuKey = arrs[1];
+            }
+
             return {
                 ...state,
                 currentUser: action.data.user,
-                selectedMenu: action.data.menu ? action.data.menu.nickName : ''
+                selectedMenu: menuKey
             }
         }
     },
@@ -88,11 +94,12 @@ export default {
                     })
                 }
                 else
-                {
+                {   
                     dispatch(
                         {
                             type: 'updateState',
                             data: {
+                                pathname: location.pathname,
                                 user: JSON.parse(user),
                                 menu: JSON.parse(menu)
                             }

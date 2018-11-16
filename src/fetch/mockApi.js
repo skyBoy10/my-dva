@@ -63,7 +63,7 @@ const getMenus = (req) => {
         {
             id: Random.id(),
             name: '订单',
-            nickName: 'office',
+            nickName: 'order',
             url: '/order',
             type: 'solution'
         },
@@ -77,14 +77,14 @@ const getMenus = (req) => {
         {
             id: Random.id(),
             name: '数据统计',
-            nickName: 'statistic',
+            nickName: 'statistics',
             url: '/statistics',
             type: 'line-chart'
         },
         {
             id: Random.id(),
             name: '用户管理',
-            nickName: 'userMg',
+            nickName: 'users',
             url: '/users',
             type: 'team'
         }

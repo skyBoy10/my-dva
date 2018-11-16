@@ -11,7 +11,7 @@ class list extends Component {
     }
     render() {
         const { list, total } = this.props.userList;
-        console.log(list);
+        
         const isLoadingData = this.props.loading.effects['userList/getUserList'];
         const pagination = {
             total: total,

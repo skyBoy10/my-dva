@@ -30,7 +30,7 @@ class login extends Component {
 
         return (
             <div className='login-form h-full'>
-                <span className='item w-500 p-10 box-1 b-r-5'>
+                <span className='item w-500 box-1 b-r-5'>
                 <Form onSubmit={this.handleSubmit}>
                     <Row>
                         <Col span={16} offset={4} className='txt-center'>
@@ -66,8 +66,8 @@ class login extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={16} offset={4}>
-                            <Button loading={this.props.isLoading} type='primary' htmlType='submit' className='w-full'>登 录</Button>
+                        <Col span={16} offset={4} className='txt-center'>
+                            <Button loading={this.props.isLoading} type='primary' htmlType='submit' className='w-7'>登 录</Button>
                         </Col>
                     </Row>
                 </Form>
