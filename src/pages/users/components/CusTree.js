@@ -5,12 +5,12 @@ import { connect } from 'dva';
 /** 
  * 引入自定义请求方式
 */
-import * as cusHttp from '../../fetch/cusHttp';
+import * as cusHttp from '../../../fetch/cusHttp';
 
 class userTree extends Component {
     componentDidMount() {
         this.props.dispatch({
-            type: 'tree/getTreeNodes',
+            type: 'user/getTreeNodes',
             data: {type: 1}
         })
     }
@@ -18,12 +18,20 @@ class userTree extends Component {
      * 处理节点选中事件
     */
     handleSelect = (key, selectedNode) => {
-        this.props.dispatch(
-            {
-                type: 'tree/updateCurrentNode',
-                data: selectedNode.node.props.dataRef
+        const { dispatch, user } = this.props;
+        
+        dispatch({
+            type: 'user/updateCurrentNode',
+            data: selectedNode.node.props.dataRef
+        });
+        dispatch({
+            type: 'user/getUserList',
+            data: {
+                keyword: '',
+                pageIndex: 1,
+                pageSize: user.pageSize
             }
-        );
+        });
     }
     /** 
      * 获取节点数据
@@ -33,7 +41,7 @@ class userTree extends Component {
         const type = treeNode.props.dataRef.isLeaf ? 1 : 2;
         return cusHttp.post('/user/getTreeNodes', {type: type, id: treeNode.props.dataRef.id}).then(res => {
             this.props.dispatch({
-                type: 'tree/updateTreeData',
+                type: 'user/updateTreeData',
                 data: {
                     id: treeNode.props.dataRef.id,
                     list: res
@@ -60,7 +68,8 @@ class userTree extends Component {
     }
     render() {
         const Search = Input.Search;
-        const { data } = this.props.tree;
+        const { user, loading } = this.props;
+        const { nodes } = user;
         
         return (
             <div className='w-full h-full pos-r'>
@@ -70,7 +79,7 @@ class userTree extends Component {
                     showLine
                     loadData={this.getNodeData}
                     onSelect={this.handleSelect}>
-                        { this.renderTreeNodes(data) }
+                        { this.renderTreeNodes(nodes) }
                     </Tree>
                 </div>
             </div>
@@ -78,4 +87,4 @@ class userTree extends Component {
     };
 };
 
-export default connect(({ tree, base, loading }) => ({ tree, base, loading }))(userTree);
+export default connect(({ user, base, loading }) => ({ user, base, loading }))(userTree);

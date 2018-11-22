@@ -4,7 +4,7 @@ import { connect } from 'dva';
 class statistics extends Component {
     render() {
         return (
-            <dvi>数据</dvi>
+            <div>数据</div>
         );
     }
 }

@@ -4,6 +4,14 @@ html, body, #root {
     height: 100%;
 }
 
+::-webkit-scrollbar-track-piece{width:10px;background-color:whitesmoke ;  }
+
+::-webkit-scrollbar{width:10px;height:6px; }
+
+::-webkit-scrollbar-thumb{height:50px;background:lightgray; border-radius: 5px; cursor:pointer;}
+
+::-webkit-scrollbar-thumb:hover{background:lightgray ; cursor:pointer}
+
 .pos-r {
     position: relative;
 }
@@ -89,8 +97,16 @@ html, body, #root {
     margin-right: 10px;
 }
 
+.m-t-10 {
+    margin-top: 10px;
+}
+
 .m-b-10 {
     margin-bottom: 10px;
+}
+
+.m-lr-5 {
+    margin: 0 5px 0 5px;
 }
 
 .b-c-blue-1 {
@@ -184,6 +200,18 @@ html, body, #root {
 
 .w-2-5{
     width: 25%;
+}
+
+.w-1-5 {
+    width: 15%;
+}
+
+.w-1 {
+    width: 10%;
+}
+
+.w-0-5 {
+    width: 5%;
 }
 
 .w-50 {
@@ -280,6 +308,14 @@ html, body, #root {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .item-0 {
+        flex-grow: 0;
+    }
+
+    .item-1 {
+        flex-grow: 1;
+    }
 }
 
 .b-rg {

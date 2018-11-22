@@ -21,34 +21,32 @@ const RouterCon = ({ history, app }) => {
     {
         path: '/dashboard',
         name: 'dashboard',
-        models: () => [ import('./models/dashboard') ],
-        component: () => import('./pages/dashboard'),
+        models: () => [ import('./models/home/dashboard') ],
+        component: () => import('./pages/home/dashboard'),
     },
     {
       path: '/order',
       name: 'order',
-      models: () => [ import('./models/order') ],
-      component: () => import('./pages/order'),
+      models: () => [ import('./models/order/order') ],
+      component: () => import('./pages/order/order'),
     },
     {
       path: '/market',
       name: 'market',
-      models: () => [ import('./models/market') ],
-      component: () => import('./pages/market'),
+      models: () => [ import('./models/market/market') ],
+      component: () => import('./pages/market/market'),
     },
     {
       path: '/statistics',
       name: 'statistics',
-      models: () => [ import('./models/statistics') ],
-      component: () => import('./pages/statistics'),
+      models: () => [ import('./models/statistics/statistics') ],
+      component: () => import('./pages/statistics/statistics'),
     },
     {
       path: '/users',
       name: 'users',
-      models: () => [ import('./models/users'), 
-      import('./models/components/cusTree'),
-      import('./models/components/cusList') ],
-      component: () => import('./pages/users'),
+      models: () => [ import('./models/users/user')],
+      component: () => import('./pages/users/users'),
     }
   ];
 
