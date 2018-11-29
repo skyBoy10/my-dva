@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Input, Button, Icon } from 'antd';
+import { Input, Button, Icon, message } from 'antd';
 
 /** 
  * 引入页面组件
@@ -46,6 +46,13 @@ class users extends Component {
         })
     }
 
+    /** 
+     * 删除用户
+    */
+    deleteUsers = () => {
+        message.warning('待开发，请耐心等待！');
+    }
+
     render() {
         const Search = Input.Search;
         const { user } = this.props;
@@ -67,7 +74,7 @@ class users extends Component {
                                 <Search className='w-200' placeholder='输入关键词' onSearch={this.handleSearch} />
                             </span>
                             <span className='line-b pull-right m-r-10'>
-                                <Button type='default' title='批量删除'>
+                                <Button disabled={user.selectedList.length <= 0} type='default' title='批量删除' onClick={this.deleteUsers}>
                                     <Icon type='usergroup-delete'/>批量删除
                                 </Button>
                             </span>
@@ -83,6 +90,14 @@ class users extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentWillUnmount() {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'user/initData',
+            data: ''
+        });
     }
 }
 

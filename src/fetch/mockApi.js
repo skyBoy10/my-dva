@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+import moment from 'moment';
 
 const Random = Mock.Random;
 
@@ -432,6 +433,62 @@ const editUser = req => {
         message: '',
         data: true,
     };
+};
+
+/** 
+ * 获取总数据
+*/
+const getStatisticsTotal = req => {
+    const param = getParam(req);
+
+    return {
+        code: '0',
+        message: '',
+        data: {
+            revenueFee: Random.float(1000, 10000000, 0, 3),
+            receivableFee: Random.float(1000, 10000000, 0, 3),
+            acceptedFee: Random.float(1000, 10000000, 0, 3),
+            totalFee: Random.float(10000, 10000000, 0, 3)
+        },
+    };
+};
+
+/** 
+ * 获取报表数据
+*/
+const getReportData = req => {
+    const param = getParam(req);
+    const len = moment(param.endDate).dayOfYear() - moment(param.startDate).dayOfYear();
+    const startDate = moment(param.startDate).millisecond();
+    const endDate = moment(param.endDate).millisecond();
+    const result = {
+        assembleData: [],
+        bargainData: [],
+        discountData: [],
+    };
+
+    for(let i = 0; i < len; i++) {
+        result.assembleData.push({
+            datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
+            revenueFee: Random.float(200, 5000, 1, 3),
+        });
+
+        result.bargainData.push({
+            datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
+            revenueFee: Random.float(100, 6000, 1, 3),
+        });
+
+        result.discountData.push({
+            datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
+            receivableFee: Random.float(100, 5000, 1, 3),
+        });
+    }
+
+    return {
+        code: '0',
+        message: '',
+        data: result,
+    }
 }
 
 Mock.mock('/login', /post/i, login);
@@ -443,3 +500,5 @@ Mock.mock('/user/getAllRoles', /post/i, getAllRoles);
 Mock.mock('/user/getAllDeps', /post/i, getAllDeps);
 Mock.mock('/user/deleteUser', /post/i, deleteUser);
 Mock.mock('/user/editUser', /post/i, editUser);
+Mock.mock('/statistics/getTotal', /post/i, getStatisticsTotal);
+Mock.mock('/statistics/getReport', /post/i, getReportData);

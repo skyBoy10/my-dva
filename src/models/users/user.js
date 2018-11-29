@@ -2,10 +2,8 @@
 import * as cusHttp from '../../fetch/cusHttp';
 import { message } from 'antd';
 
-export default {
-    namespace: 'user',
-
-    state: {
+const getInitData = () => {
+    return {
         keyword: '',
         pageIndex: 1,
         pageSize: 10,
@@ -17,8 +15,16 @@ export default {
         isEdit: false,
         roles: [],
         departs: [],
-        currentUser: null
-    },
+        currentUser: null,
+        selectedList: [],
+        checkedAll: false,
+    };
+}
+
+export default {
+    namespace: 'user',
+
+    state: getInitData(),
 
     reducers: {
         updateUserList(state, action) {
@@ -93,6 +99,18 @@ export default {
                 ...action.data
             };
         },
+
+        updateSelectedList(state, action) {
+            return {
+                ...state,
+                selectedList: action.data.selectedList,
+                checkedAll: action.data.isCheckAll
+            };
+        },
+
+        initData(state, action) {
+            return getInitData();
+        }
     },
 
     effects: {

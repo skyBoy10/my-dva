@@ -13,6 +13,7 @@ class cusMenu extends Component {
     }
     render() {
         const { Sider } = Layout;
+        const { menus } = this.props;
         
         return (
             <Sider>
@@ -26,10 +27,10 @@ class cusMenu extends Component {
                 mode='inline'
                 theme='dark'>
                     {
-                        this.props.menus.map(item => {
+                        menus.map(item => {
                             return (
                                 <Menu.Item key={item.nickName}>
-                                    <Link to={item.url} onClick={this.handleClick.bind(this, item)}>
+                                    <Link key={item.nickName} to={item.url} onClick={this.handleClick.bind(this, item)}>
                                         <Icon type={item.type} />
                                         <span>{item.name}</span>
                                     </Link>

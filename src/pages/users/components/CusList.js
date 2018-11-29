@@ -41,8 +41,31 @@ class list extends Component {
         
     }
 
+    /** 
+     * 全选切换
+    */
     onCheckAllChange = () => {
+        const { user, dispatch } = this.props;
 
+        if(user.checkedAll) {
+            dispatch({
+                type: 'user/updateSelectedList',
+                data: {
+                    selectedList: [],
+                    isCheckAll: false,
+                }
+            });
+            return;
+        }
+
+        const idArrs = user.list.map(item => item.id);
+        dispatch({
+            type: 'user/updateSelectedList',
+            data: {
+                selectedList: idArrs,
+                isCheckAll: true,
+            }
+        });
     }
 
     /** 
@@ -87,9 +110,24 @@ class list extends Component {
         });
     }
 
+    /** 
+     * 单个选择选中改变
+    */
+    itemSelectChange = arrs => {
+        const { dispatch, user } = this.props;
+
+        dispatch({
+            type: 'user/updateSelectedList',
+            data: {
+                selectedList: arrs,
+                isCheckAll: arrs.length == user.list.length
+            },
+        });
+    }
+
     render() {
         const { user, loading } = this.props;
-        const { list, total, pageIndex, pageSize } = user;
+        const { list, total, pageIndex, pageSize, selectedList,checkedAll } = user;
         const { Group } = Checkbox;
         
         const isLoadingData = loading.effects['user/getUserList'];
@@ -103,8 +141,8 @@ class list extends Component {
             <Fragment>
                 <div className='head'>
                     <span className='w-0-5'><Checkbox 
-                        indeterminate = {false}
                         onChange={this.onCheckAllChange}
+                        checked={checkedAll}
                     /></span>
                     <span className='w-1-5'>姓名</span>
                     <span className='w-1-5'>职位</span>
@@ -120,7 +158,7 @@ class list extends Component {
                         isLoadingData ? (<div className='flex-row h-full'><Spin title='加载中...' /></div>) : 
                         list.length > 0 ? 
                         (
-                            <Group className='w-full'>
+                            <Group className='w-full' value={selectedList} onChange={this.itemSelectChange}>
                             {
                                 list.map(item => {
                                     return (<Item user={item} key={item.id} deleteUser={this.deleteUser.bind(this, item)} editUser={this.editUser.bind(this, item)} />);

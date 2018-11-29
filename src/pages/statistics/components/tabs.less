@@ -1,0 +1,40 @@
+.tabs {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .first {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .item-0 {
+        flex-grow: 0;
+        width: 100px;
+        line-height: 30px;
+        text-align: center;
+        border-left: 1px solid lightgray;
+        border-top: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+
+        &:hover {
+            background-color: #108ee9;
+            border-style: none;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    .active {
+        background-color: #108ee9;
+        border-style: none;
+        color: white;
+    }
+
+    .item-1 {
+        flex-grow: 1;
+    }
+}

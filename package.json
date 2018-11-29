@@ -9,6 +9,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "dva": "^2.4.1",
+    "echarts": "^4.2.0-rc.2",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "immutable": "^4.0.0-rc.12",
     "moment": "^2.22.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
