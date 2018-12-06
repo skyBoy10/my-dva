@@ -8,9 +8,12 @@ class cusMenu extends Component {
         const { dispatch } = this.props;
         dispatch({type: 'base/getMenus', data: ''});
     }
+
     handleClick = (menu) => {
-        this.props.dispatch({type: 'base/updateCurrentMenu', data: menu});
+        const { dispatch } = this.props;
+        dispatch({type: 'base/updateCurrentMenu', data: menu});
     }
+
     render() {
         const { Sider } = Layout;
         const { menus } = this.props;

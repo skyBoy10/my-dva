@@ -120,7 +120,7 @@ class list extends Component {
             type: 'user/updateSelectedList',
             data: {
                 selectedList: arrs,
-                isCheckAll: arrs.length == user.list.length
+                isCheckAll: arrs.length === user.list.length
             },
         });
     }

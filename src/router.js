@@ -21,39 +21,51 @@ const RouterCon = ({ history, app }) => {
     {
         path: '/dashboard',
         name: 'dashboard',
-        models: () => [ import('./models/home/dashboard') ],
+        models: () => [ import('./models/home/dashboard.model') ],
         component: () => import('./pages/home/dashboard'),
+        isExact: true,
     },
     {
       path: '/order',
       name: 'order',
-      models: () => [ import('./models/order/order') ],
+      models: () => [ import('./models/order/order.model') ],
       component: () => import('./pages/order/order'),
+      isExact: true,
     },
     {
       path: '/market',
       name: 'market',
-      models: () => [ import('./models/market/market') ],
+      models: () => [ import('./models/market/market.model') ],
       component: () => import('./pages/market/market'),
+      isExact: true,
     },
     {
       path: '/statistics',
       name: 'statistics',
-      models: () => [ import('./models/statistics/statistics') ],
+      models: () => [ import('./models/statistics/statistics.model') ],
       component: () => import('./pages/statistics/statistics'),
+      isExact: true,
+    },
+    {
+      path: '/member',
+      name: 'member',
+      models: () => [ import('./models/member/member.model') ],
+      component: () => import('./pages/member/member'),
+      isExact: false,
     },
     {
       path: '/users',
       name: 'users',
-      models: () => [ import('./models/users/user')],
+      models: () => [ import('./models/users/user.model')],
       component: () => import('./pages/users/users'),
+      isExact: true,
     }
   ];
 
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/login' component={login} />
+        <Route path='/login' component={login} exact strict />
         <Route path='/' render={() => 
         <Layout className='h-full w-full'>
             <CusMenu></CusMenu>
@@ -62,7 +74,8 @@ const RouterCon = ({ history, app }) => {
                 <Content className='scroll-y pos-r'>
                 {
                   routes.map(item => {
-                      return (<Route key={item.name} path={item.path} exact component={dynamic({app, models: item.models, component: item.component})}></Route>);
+                      return (<Route key={item.name} path={item.path} exact={item.isExact} 
+                      component={dynamic({app, models: item.models, component: item.component})} />);
                   })
                 }
                 </Content>

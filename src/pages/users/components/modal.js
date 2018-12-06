@@ -99,7 +99,7 @@ class modal extends Component {
      * 获取初始化数据
     */
     getInitData = () => {
-        const { dispatch, form, user } = this.props;
+        const { user } = this.props;
 
         if(user.isEdit) {
             const currentUser = user.currentUser;

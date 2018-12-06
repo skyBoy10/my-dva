@@ -22,10 +22,10 @@ class top extends Component {
                         <span className='title'>小天地管理平台</span>
                     </Col>
                     <Col span={3} push={15} className='txt-right txt-overflow'>
-                        欢迎您，{currentUser.username}
+                        欢迎您，{currentUser ? currentUser.username : '暂无'}
                     </Col>
                     <Col span={1} push={15} className='txt-right'>
-                        <a href='javascript:void(0);' onClick={this.logout}>[退出]</a>
+                        <a onClick={this.logout}>[退出]</a>
                     </Col>
                 </Row>
             </Header>

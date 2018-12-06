@@ -1,10 +1,14 @@
 import * as cusHttp from '../../fetch/cusHttp';
-import { message } from 'antd';
 import moment from 'moment';
 
+/** 
+ * 初始化store数据
+*/
 const getInitData = () => {
     return {
         activeIndex: 1,
+        pageIndex: 1,
+        pageSize: 10,
         startDate: moment().subtract(7, 'days').format('YYYY/MM/DD'),
         endDate: moment().format('YYYY/MM/DD'),
         overview: {
@@ -17,7 +21,15 @@ const getInitData = () => {
             assembleData: [],
             bargainData: [],
             discountData: [],
-        }
+            onlineData: [],
+            offlineData: [],
+            pieData: [],
+            circleData: null,
+        },
+        detail: {
+            list: [],
+            total: 0,
+        },
     };
 };
 
@@ -28,33 +40,9 @@ export default {
 
     reducers: {
         updateIndex(state, action) {
-            let startDate = '';
-            let endDate = '';
-
-            switch(action.data) {
-                case 1: //最近七天
-                case '1':
-                    startDate = moment().subtract(7, 'days').format('YYYY/MM/DD');
-                    endDate = moment().format('YYYY/MM/DD');
-                    break;
-                case 2: //最近一个月
-                case '2':
-                    startDate = moment().subtract(1, 'months').format('YYYY/MM/DD');
-                    endDate = moment().format('YYYY/MM/DD');
-                    break;
-                case 3: //最近三个月
-                case '3':
-                    startDate = moment().subtract(3, 'months').format('YYYY/MM/DD');
-                    endDate = moment().format('YYYY/MM/DD');
-                    break;
-                default:
-                    break;
-            }
             return {
                 ...state,
-                activeIndex: action.data,
-                startDate: startDate,
-                endDate: endDate,
+                ...action.data,
             };
         },
 
@@ -71,12 +59,28 @@ export default {
             return {
                 ...state,
                 report: {
-                    assembleData: action.assembleData,
-                    bargainData: action.bargainData,
-                    discountData: action.discountData,
+                    ...action.data.lineData,
+                    pieData: action.data.pieData,
+                    circleData: action.data.circleData,
                 }
             }
-        }
+        },
+
+        updateListData(state, action) {
+            return {
+                ...state,
+                detail: {
+                    ...action.data.source,
+                },
+                ...action.data.pageInfo,
+            }
+        },
+
+        resetStore(state, action) {
+            return {
+                ...getInitData()
+            }
+        },
     },
 
     effects: {
@@ -93,13 +97,31 @@ export default {
 
         * getReportData(action, { put, call }) {
             const result = yield call(cusHttp.post, '/statistics/getReport', action.data);
+
             if(result) {
                 yield put({
                     type: 'updateReportData',
                     data: result,
                 });
             }
-        }
+        },
+
+        * getDetailData(action, { put, call }) {
+            const result = yield call(cusHttp.post, '/statistics/getDetail', action.data);
+
+            if(result) {
+                yield put({
+                    type: 'updateListData',
+                    data: {
+                        pageInfo: {
+                            pageIndex: action.data.pageIndex,
+                            pageSize: action.data.pageSize,
+                        },
+                        source: result
+                    },
+                });
+            }
+        },
     },
 
     subscriptions: {}

@@ -15,8 +15,8 @@ class Base extends Component {
         for(const key in nextProps) {
             if(!exclude.includes(key)) {
                 for(const prop in nextProps[key]) {
-                    console.log(JSON.stringify(nextProps[key][prop])+' - '+JSON.stringify(thisProps[key][prop])+' - '+is(nextProps[key][prop], thisProps[key][prop]))
                     if(!is(nextProps[key][prop], thisProps[key][prop])) {
+                        console.log(JSON.stringify(nextProps[key][prop]));
                         return true;
                     }
                 }

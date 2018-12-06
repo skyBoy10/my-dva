@@ -1,5 +1,6 @@
 import Mock from 'mockjs';
 import moment from 'moment';
+import { getTabMenus } from './member.api';
 
 const Random = Mock.Random;
 
@@ -17,6 +18,13 @@ Random.extend({
     }
 });
 
+Random.extend({
+    activities: function() {
+        const list = ['拼团', '砍价', '限时折扣'];
+        return this.pick(list);
+    }
+});
+
 const store = {
     user: {
         users: [],
@@ -24,7 +32,11 @@ const store = {
     },
     role: {
         list: [],
-    }
+    },
+    statistics: {
+        list: [],
+        total: 0,
+    },
 }
 
 const getParam = req => {
@@ -88,6 +100,13 @@ const getMenus = (req) => {
             nickName: 'market',
             url: '/market',
             type: 'inbox'
+        },
+        {
+            id: Random.id(),
+            name: '会员管理',
+            nickName: 'member',
+            url: '/member',
+            type: 'user'
         },
         {
             id: Random.id(),
@@ -459,12 +478,12 @@ const getStatisticsTotal = req => {
 const getReportData = req => {
     const param = getParam(req);
     const len = moment(param.endDate).dayOfYear() - moment(param.startDate).dayOfYear();
-    const startDate = moment(param.startDate).millisecond();
-    const endDate = moment(param.endDate).millisecond();
     const result = {
         assembleData: [],
         bargainData: [],
         discountData: [],
+        onlineData: [],
+        offlineData: [],
     };
 
     for(let i = 0; i < len; i++) {
@@ -480,15 +499,111 @@ const getReportData = req => {
 
         result.discountData.push({
             datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
-            receivableFee: Random.float(100, 5000, 1, 3),
+            revenueFee: Random.float(100, 5000, 1, 3),
+        });
+
+        result.onlineData.push({
+            datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
+            fee: Random.float(10000, 500000, 0, 2),
+        });
+
+        result.offlineData.push({
+            datetime: moment(param.startDate).add(i, 'days').format('YYYY-MM-DD'),
+            fee: Random.float(10000, 500000, 0, 2),
         });
     }
 
     return {
         code: '0',
         message: '',
-        data: result,
+        data: {
+            lineData: result,
+            pieData: [
+                {
+                    total: Random.float(2000, 8000, 0, 2),
+                    name: '拼团',
+                },
+                {
+                    total: Random.float(2000, 8000, 0, 2),
+                    name: '砍价',
+                },
+                {
+                    total: Random.float(2000, 8000, 0, 2),
+                    name: '限时折扣',
+                }
+            ],
+            circleData: {
+                online: {
+                    grossIncome: Random.float(10000, 300000, 0, 2),
+                    perCapita: Random.float(0, 6000, 0, 2),
+                    totalSales: Random.float(100000, 1000000, 0, 2),
+                    perSales: Random.float(0, 10000, 0, 2),
+                    perPay: Random.float(0, 5000, 0, 2),
+                    totalPay: Random.float(0, 20000, 0, 2),
+                },
+                offline: {
+                    grossIncome: Random.float(10000, 300000, 0, 2),
+                    perCapita: Random.float(0, 6000, 0, 2),
+                    totalSales: Random.float(100000, 800000, 0, 2),
+                    perSales: Random.float(0, 10000, 0, 2),
+                    perPay: Random.float(0, 5000, 0, 2),
+                    totalPay: Random.float(0, 20000, 0, 2),
+                },
+            },
+        },
     }
+};
+
+const initStatisticsList = param => {
+    store.statistics.total = 34;
+    for(let i = 0; i <= 34; i++) {
+        store.statistics.list.push(
+            {
+                id: Random.id(),
+                custom: Random.cname(),
+                phone: '1' + Random.natural(3, 9) + Random.integer(100000000, 999999999),
+                activity: Random.activities(),
+                createTime: moment(param.startDate).add(i, 'd').format('YYYY-MM-DD HH:mm'),
+                spendFee: Random.float(0, 1000, 0, 2),
+                address: Random.region() + '分店',
+                channel: Random.natural(1, 2),
+            }
+        );
+    }
+}
+
+/** 
+ * 获取列表数据
+*/
+const getListData = req => {
+    const param = getParam(req);
+    let result = [];
+    const { statistics } = store;
+    const { list } = statistics;
+    
+    if(list.length <= 0) {
+        initStatisticsList(param);
+    }
+
+    if(list.length > param.pageSize) {
+        const start = param.pageSize * (param.pageIndex - 1);
+        const end = list.length - 1 > (start + 10) ? start + 10 : list.length - 1;
+
+        result = list.slice(start, end);
+    }
+    else {
+        result = list;
+    }
+    
+
+    return {
+        code: '0',
+        message: '',
+        data: {
+            total: list.length,
+            list: result
+        }
+    };
 }
 
 Mock.mock('/login', /post/i, login);
@@ -502,3 +617,5 @@ Mock.mock('/user/deleteUser', /post/i, deleteUser);
 Mock.mock('/user/editUser', /post/i, editUser);
 Mock.mock('/statistics/getTotal', /post/i, getStatisticsTotal);
 Mock.mock('/statistics/getReport', /post/i, getReportData);
+Mock.mock('/statistics/getDetail', /post/i, getListData);
+Mock.mock('/member/getTabMenus', /post/i, getTabMenus);

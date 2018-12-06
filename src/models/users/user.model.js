@@ -47,7 +47,7 @@ export default {
             
             if(action.data.id) {
                 for(let i = 0; i < data.length; i++) {
-                    if(data[i].id == action.data.id) {
+                    if(data[i].id === action.data.id) {
                         data[i].children = action.data.list;
                         break;
                     }
