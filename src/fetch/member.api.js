@@ -26,11 +26,13 @@ export const getTabMenus = req => {
                         id: Random.id(),
                         title: '会员列表',
                         url: '/member/list',
+                        type: '1',
                     },
                     {
                         id: Random.id(),
                         title: '会员配置',
-                        url: '/member/config'
+                        url: '/member/config',
+                        type: '2',
                     },
                 ]
             },
@@ -42,6 +44,7 @@ export const getTabMenus = req => {
                         id: Random.id(),
                         title: '等级列表',
                         url: '/member/levels',
+                        type: '3',
                     },
                 ],
             }

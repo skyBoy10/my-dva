@@ -81,7 +81,7 @@ const Market = (props) => {
                     <span className='line-b w-2-5 p-10' key={card.type}>
                         <Card
                         bordered={true}
-                        noHovering={false}>
+                        hoverable>
                             <span className='line-b h-60 w-3 txt-center pull-left b-c-red-2 b-r-10 p-t-10'>
                                 <Icon type={card.type} className='txt-s-2-5em txt-c-white' />
                             </span>
@@ -130,7 +130,7 @@ const Tools = (props) => {
                     <span className='line-b w-2-5 p-10' key={card.type}>
                         <Card
                         bordered={true}
-                        noHovering={false}>
+                        hoverable>
                             <span className='line-b h-60 w-60 txt-center pull-left b-c-blue-1 b-r-half p-t-10'>
                                 <Icon type={card.type} className='txt-s-2-5em txt-c-white' />
                             </span>

@@ -1,5 +1,5 @@
 import * as cusHttp from '../../fetch/cusHttp';
-import { routerRedux } from 'dva/router';
+import moment from 'moment';
 
 /** 
  * 初始化store
@@ -7,6 +7,19 @@ import { routerRedux } from 'dva/router';
 const getInitState = () => {
     return {
         tabMenus: [],
+        currentPage: '1',
+        isShowMore: false,
+        searchParam: {
+            keyType: '1',
+            keyword: '',
+            levelId: '',
+            labelId: '',
+            startCardDate: moment().format('YYYY/MM/DD'),
+            endCardDate: moment().subtract(7, 'days').format('YYYY/MM/DD'),
+            gender: '',
+            ageType: '',
+            recordDateType: '',
+        }
     };
 };
 
@@ -22,6 +35,20 @@ export default {
                 tabMenus: action.data,
             };
         },
+
+        gotoPage(state, action) {
+            return {
+                ...state,
+                currentPage: action.data,
+            };
+        },
+
+        toggleCon(state, action) {
+            return {
+                ...state,
+                isShowMore: action.data,
+            }
+        }
     },
 
     effects: {
@@ -39,12 +66,6 @@ export default {
     },
 
     subscriptions: {
-        setup({ dispatch, history }) { 
-            history.listen(location => {
-                if (location.pathname === '/member') {
-                    dispatch(routerRedux.push('/member/list'))
-                }
-            });
-        }
+        
     },
 }

@@ -15,7 +15,6 @@ import MemCon from './components/content';
 @connect(({ member }) => ({ member }))
 class Member extends Component {
     render() {
-        console.log('sdf');
         return (
             <div className='flex-row member'>
                 <div className='item-0 left scroll-y'>

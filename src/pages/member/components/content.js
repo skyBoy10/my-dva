@@ -14,18 +14,25 @@ class MemCon extends Component {
     renderComponent = type => {
         switch(type) {
             case 1:
-                break;
+            case '1':
+                return (<MemList />);
+            case 2:
+            case '2':
+                return (<MemConfig />);
+            case 3:
+            case '3':
+                return (<LevelList />);
             default:
                 break;
         }
     }
 
     render() {
+        const { member } = this.props;
+
         return (
-            <div className='h-full w-full b-c-white b-r-5'>
-                <Route path='/member/list' component={MemList} />
-                <Route path='/member/config' component={MemConfig} />
-                <Route path='/member/levels' component={LevelList} />
+            <div className='h-full w-full b-r-5'>
+                {this.renderComponent(member.currentPage)}
             </div>
         );
     }

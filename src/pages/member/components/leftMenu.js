@@ -18,9 +18,18 @@ class Left extends Component {
         });
     }
 
+    gotoPage = menu => {
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'member/gotoPage',
+            data: menu.type,
+        });
+    }
+
     render() {
         const { member } = this.props;
-        const { tabMenus } = member;
+        const { tabMenus, currentPage } = member;
 
         return (
             <div className='tabMenus'>
@@ -34,8 +43,8 @@ class Left extends Component {
                                 {
                                     item.children.map(tabMenu => {
                                         return (
-                                            <div key={tabMenu.id} className='sub l-h-30'>
-                                                <NavLink activeClassName='active' to={tabMenu.url}>{tabMenu.title}</NavLink>
+                                            <div key={tabMenu.id} className='sub l-h-30' onClick={this.gotoPage.bind(this, tabMenu)}>
+                                                <span className={currentPage == tabMenu.type ? 'active' : ''}>{tabMenu.title}</span>
                                             </div>
                                         )
                                     })
