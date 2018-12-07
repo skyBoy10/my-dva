@@ -24,8 +24,11 @@ class CusSearch extends PureComponent {
      * 渲染更多条件
     */
     renderMore = () => {
+        const { form, searchParam } = this.props;
         const { RangePicker } = DatePicker;
         const { Option } = Select;
+        const { getFieldDecorator } = form;
+        const FormItem = Form.Item;
         const format = 'YYYY/MM/DD';
         const local = {
             lang: {
@@ -36,40 +39,72 @@ class CusSearch extends PureComponent {
         return (
             <Fragment>
                 <Row className='m-b-10 m-t-10'>
-                    <Col span={2} className='txt-right'>开卡时间：</Col>
+                    <Col span={2} className='txt-right l-h-40'>开卡时间：</Col>
                     <Col span={6}>
-                        <RangePicker format={format} local={local} />
+                        <FormItem style={{ margin: 0 }}>
+                            {
+                                getFieldDecorator('card', {
+                                    initialValue: '',
+                                })(
+                                    <RangePicker format={format} local={local} />
+                                )
+                            }
+                        </FormItem>
                     </Col>
-                    <Col span={2} className='txt-right'>性别：</Col>
+                    <Col span={2} className='txt-right l-h-40'>性别：</Col>
                     <Col span={2}>
-                        <Select defaultValue='' className='w-100'>
-                            <Option value=''>全部</Option>
-                            <Option value='1'>男</Option>
-                            <Option value='2'>女</Option>
-                        </Select>
+                        <FormItem style={{ margin: 0 }}>
+                            {
+                                getFieldDecorator('gender', {
+                                    initialValue: searchParam.gender
+                                })(
+                                    <Select className='w-100'>
+                                        <Option value=''>全部</Option>
+                                        <Option value='1'>男</Option>
+                                        <Option value='2'>女</Option>
+                                    </Select>
+                                )
+                            }
+                        </FormItem>
                     </Col>
-                    <Col span={2} className='txt-right'>年龄：</Col>
+                    <Col span={2} className='txt-right l-h-40'>年龄：</Col>
                     <Col span={2}>
-                        <Select defaultValue='' className='w-100'>
-                            <Option value=''>不限</Option>
-                            <Option value='1'>小于18</Option>
-                            <Option value='2'>18 ~ 25</Option>
-                            <Option value='3'>25 ~ 35</Option>
-                            <Option value='4'>35 ~ 50</Option>
-                            <Option value='5'>50以上</Option>
-                        </Select>
+                        <FormItem style={{ margin: 0 }}>
+                            {
+                                getFieldDecorator('ageType', {
+                                    initialValue: searchParam.ageType,
+                                })(
+                                    <Select className='w-100'>
+                                        <Option value=''>不限</Option>
+                                        <Option value='1'>小于18</Option>
+                                        <Option value='2'>18 ~ 25</Option>
+                                        <Option value='3'>25 ~ 35</Option>
+                                        <Option value='4'>35 ~ 50</Option>
+                                        <Option value='5'>50以上</Option>
+                                    </Select>
+                                )
+                            }
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={2}>上次交易时间：</Col>
+                    <Col span={2} className='l-h-40 txt-right'>上次交易时间：</Col>
                     <Col span={3}>
-                        <Select defaultValue='' className='w-full'>
-                            <Option value=''>全部</Option>
-                            <Option value='1'>最近一周</Option>
-                            <Option value='2'>最近一个月</Option>
-                            <Option value='3'>最近三个月</Option>
-                            <Option value='4'>最近六个月</Option>
-                        </Select>
+                        <FormItem style={{ margin: 0 }}>
+                            {
+                                getFieldDecorator('recordType', {
+                                    initialValue: searchParam.recordDateType,
+                                })(
+                                    <Select className='w-full'>
+                                        <Option value=''>全部</Option>
+                                        <Option value='1'>最近一周</Option>
+                                        <Option value='2'>最近一个月</Option>
+                                        <Option value='3'>最近三个月</Option>
+                                        <Option value='4'>最近六个月</Option>
+                                    </Select>
+                                )
+                            }
+                        </FormItem>
                     </Col>
                 </Row>
             </Fragment>
@@ -80,8 +115,10 @@ class CusSearch extends PureComponent {
      * 表单提交
     */
     handleSubmit = e => {
-        e.stopPropagation();
-
+        e.preventDefault();
+        const { form } = this.props;
+        const vals = form.getFieldsValue();
+        console.log(vals);
     }
 
     render() {
@@ -93,12 +130,12 @@ class CusSearch extends PureComponent {
         moment.locale('zh-cn');
 
         return (
-            <div className='p-10 l-h-30'>
+            <div className='p-10 l-h-40'>
                 <Form onSubmit={this.handleSubmit}>
                     <Row>
                         <Col span={8}>
                             <InputGroup compact>
-                                <FormItem>
+                                <FormItem style={{ margin: 0 }}>
                                 {
                                     getFieldDecorator('keyType', {
                                         initialValue: searchParam.keyType,
@@ -111,45 +148,61 @@ class CusSearch extends PureComponent {
                                     )
                                 }
                                 </FormItem>
-                                <FormItem>
+                                <FormItem style={{ margin: 0 }}>
                                 {
                                     getFieldDecorator('keyword', {
                                         initialValue: searchParam.keyword,
                                     })(
-                                        <Input style={{ width: '70%' }} placeholder='请输入关键词' />
+                                        <Input style={{ minWidth: '230px' }} placeholder='请输入关键词' />
                                     )
                                 }
                                 </FormItem>
                             </InputGroup>
                         </Col>
-                        <Col span={2} className='txt-right'>会员等级：</Col>
+                        <Col span={2} className='txt-right l-h-40'>会员等级：</Col>
                         <Col span={2}>
-                            <Select defaultValue='' className='w-100'>
-                                <Option value=''>全部</Option>
-                                <Option value='1'>钻石</Option>
-                                <Option value='2'>黄金</Option>
-                            </Select>
+                            <FormItem style={{ margin: 0 }}>
+                                {
+                                    getFieldDecorator('levelId', {
+                                        initialValue: searchParam.levelId
+                                    })(
+                                        <Select className='w-100'>
+                                            <Option value=''>全部</Option>
+                                            <Option value='1'>钻石</Option>
+                                            <Option value='2'>黄金</Option>
+                                        </Select>
+                                    )
+                                }    
+                            </FormItem>
                         </Col>
-                        <Col span={2} className='txt-right'>标签：</Col>
+                        <Col span={2} className='txt-right l-h-40'>标签：</Col>
                         <Col span={7}>
-                            <Select defaultValue='' className='w-100'>
-                                <Option value=''>全部</Option>
-                                <OptGroup label='大众标签'>
-                                    <Option value='100'>富二代</Option>
-                                    <Option value='101'>星二代</Option>
-                                    <Option value='102'>官二代</Option>
-                                </OptGroup>
-                                <OptGroup label='个性标签'>
-                                    <Option value='200'>有钱</Option>
-                                    <Option value='201'>看重优惠</Option>
-                                </OptGroup>
-                            </Select>
-                            <a className='more pull-right' onClick={this.switchCon}>
+                            <FormItem style={{ margin: 0, width: 100, display: 'inline-block' }}>
+                                {
+                                    getFieldDecorator('labelId', {
+                                        initialValue: searchParam.labelId
+                                    })(
+                                        <Select className='w-100'>
+                                            <Option value=''>全部</Option>
+                                            <OptGroup label='大众标签'>
+                                                <Option value='100'>富二代</Option>
+                                                <Option value='101'>星二代</Option>
+                                                <Option value='102'>官二代</Option>
+                                            </OptGroup>
+                                            <OptGroup label='个性标签'>
+                                                <Option value='200'>有钱</Option>
+                                                <Option value='201'>看重优惠</Option>
+                                            </OptGroup>
+                                        </Select>
+                                    )
+                                }
+                            </FormItem>
+                            <a className='more pull-right l-h-40' onClick={this.switchCon}>
                                 <span className='m-r-5'>{ isShowMore ? '收起' : '更多' }</span>
                                 <Icon type={ isShowMore ? 'up' : 'down' } />
                             </a>
-                            <Button type='default pull-right m-r-20'>重置</Button>
-                            <Button type='primary' className='m-r-20 pull-right'>查询</Button>
+                            <Button type='default' className='pull-right m-r-20 m-t-5'>重置</Button>
+                            <Button type='primary' htmlType='submit' className='m-r-20 pull-right m-t-5'>查询</Button>
                         </Col>
                     </Row>
                     {
