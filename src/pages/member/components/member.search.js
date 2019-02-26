@@ -8,6 +8,17 @@ import moment from 'moment';
 import '../member.less';
 
 class CusSearch extends PureComponent {
+    componentDidMount() {
+        const { dispatch } = this.props;
+        
+        dispatch({
+            type: 'memList/getLevelAndLabel',
+            data: {
+                isAll: true,
+            },
+        });
+    }
+
     /** 
      * 切换条件
     */
@@ -15,7 +26,7 @@ class CusSearch extends PureComponent {
         const { dispatch, isShowMore } = this.props;
 
         dispatch({
-            type: 'member/toggleCon',
+            type: 'memList/toggleCon',
             data: !isShowMore,
         });
     }
@@ -46,7 +57,7 @@ class CusSearch extends PureComponent {
                                 getFieldDecorator('card', {
                                     initialValue: '',
                                 })(
-                                    <RangePicker format={format} local={local} />
+                                    <RangePicker placeholder={['起始日期', '截至日期']} format={format} local={local} />
                                 )
                             }
                         </FormItem>
@@ -92,7 +103,7 @@ class CusSearch extends PureComponent {
                     <Col span={3}>
                         <FormItem style={{ margin: 0 }}>
                             {
-                                getFieldDecorator('recordType', {
+                                getFieldDecorator('recordDateType', {
                                     initialValue: searchParam.recordDateType,
                                 })(
                                     <Select className='w-full'>
@@ -116,17 +127,57 @@ class CusSearch extends PureComponent {
     */
     handleSubmit = e => {
         e.preventDefault();
-        const { form } = this.props;
+        const { form, dispatch, pageSize } = this.props;
         const vals = form.getFieldsValue();
-        console.log(vals);
+        
+        dispatch({
+            type:'memList/getMemList',
+            data: {
+                ...vals,
+                pageSize,
+                pageIndex: 1,
+            },
+        });
+    }
+
+    /** 
+     * 对标签进行分组
+    */
+    groupLabels = list => {
+        const arrs = [
+            {
+                id: '1000',
+                name: '大众标签',
+                children: [],
+            },
+            {
+                id: '2000',
+                name: '个性标签',
+                children: [],
+            }
+        ];
+
+        if(list && list.length > 0) {
+            for(let i = 0; i < list.length; i++) {
+                if(list[i].type == 1) {
+                    arrs[0].children.push(list[i]);
+                }
+                else {
+                    arrs[1].children.push(list[i]);
+                }
+            }
+        }
+
+        return arrs;
     }
 
     render() {
-        const { isShowMore, searchParam, form } = this.props;
+        const { isShowMore, searchParam, form, labels, levels } = this.props;
         const InputGroup = Input.Group;
         const { Option, OptGroup } = Select;
         const { getFieldDecorator } = form;
         const FormItem = Form.Item;
+        const labelOpts = this.groupLabels(labels);
         moment.locale('zh-cn');
 
         return (
@@ -153,7 +204,7 @@ class CusSearch extends PureComponent {
                                     getFieldDecorator('keyword', {
                                         initialValue: searchParam.keyword,
                                     })(
-                                        <Input style={{ minWidth: '230px' }} placeholder='请输入关键词' />
+                                        <Input style={{ minWidth: '260px' }} placeholder='请输入关键词' />
                                     )
                                 }
                                 </FormItem>
@@ -168,8 +219,13 @@ class CusSearch extends PureComponent {
                                     })(
                                         <Select className='w-100'>
                                             <Option value=''>全部</Option>
-                                            <Option value='1'>钻石</Option>
-                                            <Option value='2'>黄金</Option>
+                                            {
+                                                levels.map(level => {
+                                                    return (
+                                                        <Option key={level.id}>{level.name || '--'}</Option>
+                                                    );
+                                                })
+                                            }
                                         </Select>
                                     )
                                 }    
@@ -184,15 +240,21 @@ class CusSearch extends PureComponent {
                                     })(
                                         <Select className='w-100'>
                                             <Option value=''>全部</Option>
-                                            <OptGroup label='大众标签'>
-                                                <Option value='100'>富二代</Option>
-                                                <Option value='101'>星二代</Option>
-                                                <Option value='102'>官二代</Option>
-                                            </OptGroup>
-                                            <OptGroup label='个性标签'>
-                                                <Option value='200'>有钱</Option>
-                                                <Option value='201'>看重优惠</Option>
-                                            </OptGroup>
+                                            {
+                                                labelOpts.map(label => {
+                                                    return (
+                                                        <OptGroup key={label.id} label={label.name || '--'}>
+                                                            {
+                                                                label.children.map(item => {
+                                                                    return (<Option key={item.id} value={item.id}>
+                                                                        {item.name || '--'}
+                                                                    </Option>);
+                                                                })
+                                                            }
+                                                        </OptGroup>
+                                                    );
+                                                })
+                                            }
                                         </Select>
                                     )
                                 }

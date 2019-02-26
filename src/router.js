@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route, routerRedux } from 'dva/router';
+import { Switch, Route, routerRedux, Redirect } from 'dva/router';
 import dynamic from 'dva/dynamic';
-import { Layout } from 'antd';
+import { Layout, LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 /** 
  * 引入自定义组件
@@ -17,73 +18,139 @@ const RouterCon = ({ history, app }) => {
     models: () => [ import('./models/login'), ],
     component: () =>  import('./pages/Login')
   });
+
   const routes = [
     {
-        path: '/dashboard',
+        path: '/app/dashboard',
         name: 'dashboard',
-        models: () => [ import('./models/home/dashboard.model') ],
-        component: () => import('./pages/home/dashboard'),
+        component: dynamic({
+          app,
+          models: () => [ import('./models/home/dashboard.model') ],
+          component: () => import('./pages/home/dashboard'),
+        }),
         isExact: true,
+        isHasChild: false,
     },
     {
-      path: '/order',
+      path: '/app/business',
+      name: 'business',
+      component: dynamic({
+        app,
+        models: () => [ import('./models/business/business.model'), 
+          import('./models/business/roomTypes.model') ],
+        component: () => import('./pages/business/business')
+      })
+    },
+    {
+      path: '/app/order',
       name: 'order',
-      models: () => [ import('./models/order/order.model') ],
-      component: () => import('./pages/order/order'),
-      isExact: true,
-    },
-    {
-      path: '/market',
-      name: 'market',
-      models: () => [ import('./models/market/market.model') ],
-      component: () => import('./pages/market/market'),
-      isExact: true,
-    },
-    {
-      path: '/statistics',
-      name: 'statistics',
-      models: () => [ import('./models/statistics/statistics.model') ],
-      component: () => import('./pages/statistics/statistics'),
-      isExact: true,
-    },
-    {
-      path: '/member',
-      name: 'member',
-      models: () => [ import('./models/member/member.model') ],
-      component: () => import('./pages/member/member'),
+      component: dynamic({
+        app,
+        models: () => [ import('./models/order/order.model'),
+        import('./models/order/book.model') ],
+        component: () => import('./pages/order/order'),
+      }),
       isExact: false,
     },
     {
-      path: '/users',
+      path: '/app/member',
+      name: 'member',
+      component: dynamic({
+        app,
+        models: () => [ import('./models/member/member.model'), 
+        import('./models/member/member.list.model'), import('./models/member/label.model'),
+        import('./models/member/card.model')],
+        component: () =>  import('./pages/member/member')
+      }),
+      isExact: false,
+      isHasChild: true,
+    },
+    {
+      path: '/app/market',
+      name: 'market',
+      component: dynamic({
+        app,
+        models: () => [ import('./models/market/market.model') ],
+        component: () => import('./pages/market/market'),
+      }),
+      isExact: true,
+    },
+    {
+      path: '/app/statistics',
+      name: 'statistics',
+      component: dynamic({
+        app,
+        models: () => [ import('./models/statistics/statistics.model') ],
+        component: () => import('./pages/statistics/statistics'),
+      }),
+      isExact: true,
+    },
+    {
+      path: '/app/users',
       name: 'users',
-      models: () => [ import('./models/users/user.model')],
-      component: () => import('./pages/users/users'),
+      component: dynamic({
+        app,
+        models: () => [ import('./models/users/user.model')],
+        component: () => import('./pages/users/users'),
+      }),
+      isExact: true,
+    },
+    {
+      path: '/app/404',
+      name: '404',
+      component: dynamic({
+        app,
+        component: () => import('./pages/404'),
+      }),
       isExact: true,
     }
   ];
 
+  /** 
+   * 渲染路由
+  */
+  const renderRoutes = routes => {
+    let result = null;
+
+    if(routes && routes.length > 0) {
+      result = routes.map(route => {
+        if(route.isHasChild) {
+          return (
+          <Route key={route.path} path={route.path} exact={route.isExact} render={({ location }) => <route.component location={location} />} />
+          );
+        } 
+        else {
+          return (
+            <Route key={route.path} path={route.path} exact={route.isExact} component={route.component} />
+          );
+        }
+      });
+    }
+    
+    return result;
+  };
+
   return (
+    <LocaleProvider locale={zhCN}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/login' component={login} exact strict />
-        <Route path='/' render={() => 
+        <Route path='/' component={login} exact />
+        <Route path='/login' component={login} exact />
+        <Route path='/app' render={() => 
         <Layout className='h-full w-full'>
-            <CusMenu></CusMenu>
+            <CusMenu />
             <Layout>
                 <Top />
                 <Content className='scroll-y pos-r'>
-                {
-                  routes.map(item => {
-                      return (<Route key={item.name} path={item.path} exact={item.isExact} 
-                      component={dynamic({app, models: item.models, component: item.component})} />);
-                  })
-                }
+                  {renderRoutes(routes)}
                 </Content>
             </Layout>
         </Layout>
         }/>
+        <Redirect to='/login'/>
       </Switch>
     </ConnectedRouter>
+    </LocaleProvider>
   );
 }
 

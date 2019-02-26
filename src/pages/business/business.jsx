@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Route, Switch } from 'dva/router';
+import { Switch, Route, Redirect } from 'dva/router';
+
+/** 
+ * 引入自定义样式
+*/
+import './business.less';
 
 /** 
  * 引入自定义组件
 */
 import SubMenus from '../../components/leftMenu';
-import BookList from './components/bookList';
 import BreadLine from '../../components/breadLine';
+import RoomTypes from './components/roomTypes';
+import RoomPrice from './components/roomPrice';
 
-import './order.less';
-@connect(({ order }) => ({ order }))
-class Order extends Component {
+@connect(({ loading, business }) => ({ loading, business }))
+class Business extends PureComponent {
     render() {
-        const { order } = this.props;
-        const { subMenus } = order;
+        const { business } = this.props;
+        const { subMenus } = business;
 
         return (
-            <div className='flex-row order'>
+            <div className='flex-row business'>
                 <div className='row-0 left scroll-y'>
                     <SubMenus subMenus={subMenus} />
                 </div>
@@ -28,7 +33,9 @@ class Order extends Component {
                     <div className='item-1 pos-r'>
                         <div className='pos-ab h-full w-full'>
                             <Switch>
-                                <Route path='/app/order/bookList' component={BookList} />
+                                <Route exact path='/app/business/roomTypes' component={RoomTypes} />
+                                <Route exact path='/app/business/roomPrice' component={RoomPrice} />
+                                <Redirect to='/app/404' />
                             </Switch>
                         </div>
                     </div>
@@ -36,6 +43,6 @@ class Order extends Component {
             </div>
         );
     }
-}
+};
 
-export default connect(({ business, loading }) => ({ business, loading }))(Order);
+export default Business;

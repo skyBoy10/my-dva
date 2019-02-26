@@ -8,18 +8,10 @@ const getInitState = () => {
     return {
         tabMenus: [],
         currentPage: '1',
-        isShowMore: false,
-        searchParam: {
-            keyType: '1',
-            keyword: '',
-            levelId: '',
-            labelId: '',
-            startCardDate: moment().format('YYYY/MM/DD'),
-            endCardDate: moment().subtract(7, 'days').format('YYYY/MM/DD'),
-            gender: '',
-            ageType: '',
-            recordDateType: '',
-        }
+        memDetail: {
+            detail: {},
+            record: {}
+        },
     };
 };
 
@@ -36,18 +28,35 @@ export default {
             };
         },
 
-        gotoPage(state, action) {
+        updateDetail(state, action) {
             return {
                 ...state,
-                currentPage: action.data,
+                memDetail: {
+                    detail: {
+                        ...action.data.detail,
+                    },
+                    record: {
+                        ...action.data.record
+                    }
+                }
             };
         },
 
-        toggleCon(state, action) {
+        resetStore(state, action) {
+            const initStore = getInitState();
+            return {
+                ...initStore
+            }
+        },
+
+        resetDetail(state, action) {
             return {
                 ...state,
-                isShowMore: action.data,
-            }
+                memDetail: {
+                    detail: {},
+                    record: {},
+                }
+            };
         }
     },
 
@@ -56,12 +65,23 @@ export default {
             const result = yield call(cusHttp.post, '/member/getTabMenus', action.data);
 
             if(result) {
+                //yield put(routerRedux.push(result[0].children[0].url))
                 yield put({
                     type: 'updateTabMenus',
                     data: result,
                 });
-                
             };
+        },
+
+        * getMemberDetail(action, { put, call }) {
+            const result = yield call(cusHttp.post, '/member/getMemberDetail', action.data);
+
+            if(result) {
+                yield put({
+                    type: 'updateDetail',
+                    data: result,
+                });
+            }
         }
     },
 

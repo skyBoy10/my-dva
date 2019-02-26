@@ -1,6 +1,8 @@
 import Mock from 'mockjs';
 import moment from 'moment';
-import { getTabMenus } from './member.api';
+import { getTabMenus, getMemList, getLabels, getMemLevels, updateLabel, getDetail, getCardDetail } from './member.api';
+import { getOrderList } from './order.api';
+import { getRoomTypeList, getRoomsByType } from  './business.api';
 
 const Random = Mock.Random;
 
@@ -84,42 +86,49 @@ const getMenus = (req) => {
             id: Random.id(),
             name: '概况',
             nickName: 'dashboard',
-            url: '/dashboard',
+            url: '/app/dashboard',
             type: 'home'
+        },
+        {
+            id: Random.id(),
+            name: '业务',
+            nickName: 'business',
+            url: '/app/business/roomTypes',
+            type: 'desktop'
         },
         {
             id: Random.id(),
             name: '订单',
             nickName: 'order',
-            url: '/order',
+            url: '/app/order/bookList',
             type: 'solution'
         },
         {
             id: Random.id(),
             name: '营销',
             nickName: 'market',
-            url: '/market',
+            url: '/app/market',
             type: 'inbox'
         },
         {
             id: Random.id(),
             name: '会员管理',
             nickName: 'member',
-            url: '/member',
+            url: '/app/member/list',
             type: 'user'
         },
         {
             id: Random.id(),
             name: '数据统计',
             nickName: 'statistics',
-            url: '/statistics',
+            url: '/app/statistics',
             type: 'line-chart'
         },
         {
             id: Random.id(),
             name: '用户管理',
             nickName: 'users',
-            url: '/users',
+            url: '/app/users',
             type: 'team'
         }
     ];
@@ -619,3 +628,12 @@ Mock.mock('/statistics/getTotal', /post/i, getStatisticsTotal);
 Mock.mock('/statistics/getReport', /post/i, getReportData);
 Mock.mock('/statistics/getDetail', /post/i, getListData);
 Mock.mock('/member/getTabMenus', /post/i, getTabMenus);
+Mock.mock('/member/getMemList', /post/i, getMemList);
+Mock.mock('/member/getMemLevels', /post/i, getMemLevels);
+Mock.mock('/member/getLabels', /post/i, getLabels);
+Mock.mock('/member/tickLabel', /post/i, updateLabel);
+Mock.mock('/member/getMemberDetail', /post/i, getDetail);
+Mock.mock('/member/getCardDetail', /post/i, getCardDetail);
+Mock.mock('/order/getBookList', /post/i, getOrderList);
+Mock.mock('/business/getRoomTypeList', /post/i, getRoomTypeList);
+Mock.mock('/business/getRoomsByType', /post/i, getRoomsByType);

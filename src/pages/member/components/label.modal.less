@@ -1,0 +1,61 @@
+.labelModal {
+    .list {
+        height: 400px;
+        position: relative;
+
+        .head {
+            font-weight: bold;
+            line-height: 30px;
+            background-color: whitesmoke;
+            padding: 0 10px 0 10px;
+
+            span {
+                display: inline-block;
+                float: left;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .body {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            bottom: 40px;
+            padding: 0 10px 0 10px;
+
+            .row {
+                line-height: 30px;
+                border-bottom: 1px solid lightgray;
+                float: left;
+                width: 100%;
+
+                span {
+                    display: inline-block;
+                    float: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .foot {
+            position: absolute;
+            left: 0;
+            right: 0;
+            padding: 0 10px 0 10px;
+            bottom: 0;
+            height: 30px;
+            text-align: right;
+
+            :global {
+                .ant-pagination-total-text {
+                    float: left;
+                }
+            }
+        }
+    }
+}

@@ -35,7 +35,7 @@ class users extends Component {
     /** 
      * 新增用户
     */
-    addNewUser = () => {
+    addNewUser = (e) => {
         const { dispatch } = this.props;
         dispatch({
             type: 'user/switchModal',
@@ -60,10 +60,10 @@ class users extends Component {
 
         return (
             <div className='h-full flex-row p-10 pos-ab t-0 b-0 l-0 r-0 users'>
-                <span className='line-b w-200 h-full p-10 b-c-white item-0 box-sha-1 b-r-5'>
+                <span className='line-b w-200 h-full p-10 b-c-white row-0 box-sha-1 b-r-5'>
                     <CusTree />
                 </span>
-                <div className='h-full item-1 pos-r p-l-10'>
+                <div className='h-full row-1 pos-r p-l-10'>
                     <div className='b-c-white b-r-5 flex-col h-full'>
                         <div className='p-10 item-0 w-full m-t-10'>
                             <span className='l-h-30 line-b h-30 tag'>当前店铺：</span>
@@ -82,7 +82,7 @@ class users extends Component {
                                 <Button type='primary' title='新增用户' onClick={this.addNewUser}><Icon type='user-add' />新增用户</Button>
                             </span>
                         </div>
-                        <div className='p-10 item-1 w-full pos-r'>
+                        <div className='p-10 row-1 w-full pos-r'>
                             <CusList />
                         </div>
                     </div>

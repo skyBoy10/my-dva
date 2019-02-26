@@ -14,7 +14,7 @@ export const post = (api, param) => {
                 else {
                     reject(res.data)
                 }
-            }, 2000);
+            }, 1000);
         }, err => {
             reject(err);
             const error = new Error(err);

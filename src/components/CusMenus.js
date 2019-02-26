@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Menu, Layout, Icon } from 'antd';
 import { Link } from 'dva/router';
+import './cusMenu.less';
 
 class cusMenu extends Component {
     componentDidMount() {
@@ -19,7 +20,7 @@ class cusMenu extends Component {
         const { menus } = this.props;
         
         return (
-            <Sider>
+            <Sider width={180}>
                 <div className='p-7 txt-center flex-row h-100'>
                     <span className='line-b l-h-50 b-r-half w-50 h-50 txt-center txt-s-20 b-c-red-1 txt-c-white'>
                         <Icon type='user' />
@@ -33,7 +34,7 @@ class cusMenu extends Component {
                         menus.map(item => {
                             return (
                                 <Menu.Item key={item.nickName}>
-                                    <Link key={item.nickName} to={item.url} onClick={this.handleClick.bind(this, item)}>
+                                    <Link key={item.url} to={item.url} onClick={this.handleClick.bind(this, item)}>
                                         <Icon type={item.type} />
                                         <span>{item.name}</span>
                                     </Link>

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { NavLink } from 'dva/router';
+import { NavLink, withRouter } from 'dva/router';
 
 /** 
  * 引入自定义样式
@@ -18,18 +18,18 @@ class Left extends Component {
         });
     }
 
-    gotoPage = menu => {
-        const { dispatch } = this.props;
+    /** 
+     * 激活路由
+    */
+    isActiveCurrent = (match, location) => {
+        if(!match) return false;
 
-        dispatch({
-            type: 'member/gotoPage',
-            data: menu.type,
-        });
+        return true;
     }
 
     render() {
         const { member } = this.props;
-        const { tabMenus, currentPage } = member;
+        const { tabMenus } = member;
 
         return (
             <div className='tabMenus'>
@@ -43,8 +43,10 @@ class Left extends Component {
                                 {
                                     item.children.map(tabMenu => {
                                         return (
-                                            <div key={tabMenu.id} className='sub l-h-30' onClick={this.gotoPage.bind(this, tabMenu)}>
-                                                <span className={currentPage == tabMenu.type ? 'active' : ''}>{tabMenu.title}</span>
+                                            <div key={tabMenu.id} className='l-h-30'>
+                                                <NavLink className='sub' 
+                                                isActive={this.isActiveCurrent}
+                                                to={tabMenu.url}>{tabMenu.title}</NavLink>
                                             </div>
                                         )
                                     })
@@ -59,4 +61,4 @@ class Left extends Component {
     };
 }
 
-export default Left;
+export default withRouter(Left);

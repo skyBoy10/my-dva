@@ -70,15 +70,12 @@ export default {
         },
         updateState(state, action) {
             let menuKey = '';
-            if(action.data.pathname) {
-                const arrs = action.data.pathname.split('/');
-                menuKey = arrs[1];
-            }
-
+            const arrs = action.data.pathname.split('/');
+            
             return {
                 ...state,
                 currentUser: action.data.user,
-                selectedMenu: menuKey
+                selectedMenu: arrs[2]
             }
         }
     },
