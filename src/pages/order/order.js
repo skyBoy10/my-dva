@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Route, Switch } from 'dva/router';
+import { Route, Switch, Redirect } from 'dva/router';
 
 /** 
  * 引入自定义组件
@@ -29,6 +29,7 @@ class Order extends Component {
                         <div className='pos-ab h-full w-full'>
                             <Switch>
                                 <Route path='/app/order/bookList' component={BookList} />
+                                <Redirect to='/app/404' />
                             </Switch>
                         </div>
                     </div>

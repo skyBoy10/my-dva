@@ -178,12 +178,12 @@ class Calendar extends PureComponent {
 
         return (
             <div className='calendar'>
-                <div className='row item-0 head leftBorder'>
+                <div className='calRow calhead cal-0 leftBorder'>
                     {
                         headers.map(item => <span key={item} className='cell'>{item}</span>)
                     }
                 </div>
-                <div className='row item-1 leftBorder'>
+                <div className='calRow cal-1 leftBorder'>
                     {
                         list.map(item => {
                             return (
@@ -192,7 +192,7 @@ class Calendar extends PureComponent {
                                 className={item.isCurrent ? (item.date == currentDate ? 'cell item active' : 'cell item enabled') : 'cell item disabled'}>
                                     <div>{item.value}</div>
                                     <div className='txt-right txt-bold'>{formatMoney(item.price, 1, 2)}</div>
-                                    <div className='txt-right'>可住{item.enabledRooms}间/共{item.total}间</div>
+                                    <div className='txt-right'>可住{item.enabledRooms || '0'}间/共{item.total || '0'}间</div>
                                 </span>
                             );
                         })
