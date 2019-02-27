@@ -54,7 +54,7 @@ const getParam = req => {
 */
 const login = (req) => {
     const enableUser = {
-        username: 'kaiqiang.cao',
+        username: 'admin',
         password: '123456',
         isAdmin: true
     };

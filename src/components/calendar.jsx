@@ -150,13 +150,12 @@ class Calendar extends PureComponent {
     /** 
      * 单元格点击回调
     */
-    onClickCell = e => {
-        const data = e.target.getAttribute('data');
-        if(e && data) {
+    onClickCell = item => {
+        if(item && item.isCurrent) {
             const { clickCallback } = this.props;
-
+            this.setState({ currentDate: item.date });
             if(clickCallback && typeof(clickCallback) === 'function') {
-                clickCallback(data);
+                clickCallback(item);
             }
         }
     }
@@ -184,12 +183,12 @@ class Calendar extends PureComponent {
                         headers.map(item => <span key={item} className='cell'>{item}</span>)
                     }
                 </div>
-                <div className='row item-1 leftBorder' onClick={this.onClickCell}>
+                <div className='row item-1 leftBorder'>
                     {
                         list.map(item => {
                             return (
                                 <span key={item.date} 
-                                data={JSON.stringify(item)}
+                                onClick={this.onClickCell.bind(this, item)}
                                 className={item.isCurrent ? (item.date == currentDate ? 'cell item active' : 'cell item enabled') : 'cell item disabled'}>
                                     <div>{item.value}</div>
                                     <div className='txt-right txt-bold'>{formatMoney(item.price, 1, 2)}</div>

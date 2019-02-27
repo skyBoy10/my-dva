@@ -59,7 +59,7 @@ const SearchForm = props => {
                             getFieldDecorator('dataRange', {
                                 initialValue: [moment(defaultParam.startDate), moment(defaultParam.endDate)]
                             })(
-                                <RangePicker locale={local} />
+                                <RangePicker allowClear={false} locale={local} />
                             )
                         }
                     </FormItem>

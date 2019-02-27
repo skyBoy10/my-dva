@@ -40,6 +40,13 @@ export default {
                 ...state,
                 roomTypeDetail: action.data,
             };
+        },
+
+        clearRoomDetail(state, action) {
+            return {
+                ...state,
+                roomTypeDetail: null,
+            };
         }
     },
 

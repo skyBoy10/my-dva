@@ -45,7 +45,12 @@ class RoomPrice extends PureComponent {
      * 日期变化
     */
     dateChange = (date) => {
+        const { location } = this.props;
         this.setState({ date: moment(date).format('YYYY/MM/DD') });
+        this.getRoomDetail({
+            id: location.state.id,
+            date: moment(date).format('YYYY/MM/DD'),
+        });
     }
 
     /** 
@@ -53,6 +58,15 @@ class RoomPrice extends PureComponent {
     */
     cellClick = data => {
         
+    }
+
+    componentWillUnmount() {
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'roomTypeModel/clearRoomDetail',
+            data: '',
+        });
     }
 
     render() {
@@ -63,11 +77,12 @@ class RoomPrice extends PureComponent {
         return (
             <div className='roomPrice'>
                 <div className='search'>
-                    <span className='leftItem txt-bold l-h-30 '>
-                        {roomTypeDetail ? roomTypeDetail.roomTypeName : '--'}
+                    <span className='leftItem typeShow'>
+                        {roomTypeDetail && roomTypeDetail.roomTypeName ? roomTypeDetail.roomTypeName : '无房型'}
                     </span>
                     <span className='leftItem'>
                         <MonthPicker 
+                        allowClear={false}
                         defaultValue={moment(this.state.date)} 
                         placeholder='选择月份' 
                         onChange={this.dateChange} />
