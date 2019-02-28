@@ -33,7 +33,7 @@ class Member extends Component {
                         <Route path='/app/member/levels' component={MemLevel} />
                         <Route path='/app/member/detail' component={MemDetail} />
                         <Route path='/app/member/edit' component={CardEdit} />
-                        <Redirect to='/app/404' />
+                        <Redirect to='/app/exception/404' />
                     </Switch>
                 </div>
             </div>

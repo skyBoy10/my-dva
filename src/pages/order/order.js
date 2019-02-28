@@ -29,7 +29,7 @@ class Order extends Component {
                         <div className='pos-ab h-full w-full'>
                             <Switch>
                                 <Route path='/app/order/bookList' component={BookList} />
-                                <Redirect to='/app/404' />
+                                <Redirect to='/app/exception/404' />
                             </Switch>
                         </div>
                     </div>

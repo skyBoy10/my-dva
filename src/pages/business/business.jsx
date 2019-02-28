@@ -35,7 +35,7 @@ class Business extends PureComponent {
                             <Switch>
                                 <Route exact path='/app/business/roomTypes' component={RoomTypes} />
                                 <Route exact path='/app/business/roomPrice' component={RoomPrice} />
-                                <Redirect to='/app/404' />
+                                <Redirect to='/app/exception/404' />
                             </Switch>
                         </div>
                     </div>

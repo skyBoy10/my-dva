@@ -96,11 +96,11 @@ const RouterCon = ({ history, app }) => {
       isExact: true,
     },
     {
-      path: '/app/404',
+      path: '/app/exception/404',
       name: '404',
       component: dynamic({
         app,
-        component: () => import('./pages/404'),
+        component: () => import('./pages/exception/404'),
       }),
       isExact: true,
     }
