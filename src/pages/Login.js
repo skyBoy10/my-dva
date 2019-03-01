@@ -77,7 +77,7 @@ class login extends Component {
     };
 }
 
-export default connect(({ login, global = {}, loading }) => ({
+export default connect(({ login, loading }) => ({
     login: login,
     isLoading: loading.effects['login/login']
 }))(Form.create()(login));
