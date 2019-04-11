@@ -32,6 +32,6 @@
     "less-loader": "^4.1.0",
     "mockjs": "^1.0.1-beta3",
     "redbox-react": "^1.4.3",
-    "roadhog": "^2.0.0"
+    "roadhog": "^2.4.9"
   }
 }
