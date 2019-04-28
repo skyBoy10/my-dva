@@ -168,7 +168,7 @@ const initMemList = param => {
             cardNo: 'XTD' + Random.datetime('yyyyMMddHHmm') + Random.natural(1000, 5000),
             phone: '1' + Random.natural(3, 9) + Random.integer(100000000, 999999999),
             accessIntegral: Random.natural(0, 1000),
-            consumeFee: Random.float(0, 6000),
+            consumeFee: Random.float(0, 10000, 2, 2),
             consumeCnt: Random.natural(0, 100),
             state: Random.natural(1, 2), /** 1：正常；2：冻结；*/
             levelId: level.id,

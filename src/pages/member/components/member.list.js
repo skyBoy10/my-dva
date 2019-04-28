@@ -47,7 +47,7 @@ const MemItem = props => {
                 <Col span={4} className='txt-overflow'>{item.cardNo || '--'}</Col>
                 <Col span={3} className='txt-overflow'>{item.phone || '--'}</Col>
                 <Col span={3} className='txt-overflow'>{item.accessIntegral || '--'}</Col>
-                <Col span={3} className='txt-overflow'>{formatMoney(item.consumeFee) || '--'}</Col>
+                <Col span={3} className='txt-overflow'>{formatMoney(item.consumeFee, 1, 2) || '--'}</Col>
                 <Col span={3} className='txt-overflow'>{item.consumeCnt || '--'}</Col>
                 <Col span={4} className='txt-overflow'>
                     <Link to={{

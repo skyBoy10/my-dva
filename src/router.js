@@ -18,6 +18,11 @@ const RouterCon = ({ history, app }) => {
     models: () => [ import('./models/login'), ],
     component: () =>  import('./pages/Login')
   });
+  const GuidDashboard = dynamic({
+    app,
+    models: () => [ import('./models/guidance/guidance.model') ],
+    component: () => import('./pages/guidance/dashboard')
+  });
 
   const routes = [
     {
@@ -30,6 +35,17 @@ const RouterCon = ({ history, app }) => {
         }),
         isExact: true,
         isHasChild: false,
+    },
+    {
+      path: '/app/room/map',
+      name: 'roommap',
+      component: dynamic({
+        app,
+        models: () => [ ],
+        component: () => import('./pages/room/room.home'),
+      }),
+      isExact: true,
+      isHasChild: false,
     },
     {
       path: '/app/business',
@@ -136,6 +152,7 @@ const RouterCon = ({ history, app }) => {
       <Switch>
         <Route path='/' component={login} exact />
         <Route path='/login' component={login} exact />
+        <Route path='/guidance/dashboard' component={GuidDashboard} exact />
         <Route path='/app' render={() => 
         <Layout className='h-full w-full'>
             <CusMenu />

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { getTabMenus, getMemList, getLabels, getMemLevels, updateLabel, getDetail, getCardDetail } from './member.api';
 import { getOrderList } from './order.api';
 import { getRoomTypeList, getRoomsByType } from  './business.api';
+import { getList, getAmount } from './guidance.api';
 
 const Random = Mock.Random;
 
@@ -88,6 +89,13 @@ const getMenus = (req) => {
             nickName: 'dashboard',
             url: '/app/dashboard',
             type: 'home'
+        },
+        {
+            id: Random.id(),
+            name: '房态图',
+            nickName: 'roommap',
+            url: '/app/room/map',
+            type: 'schedule'
         },
         {
             id: Random.id(),
@@ -637,3 +645,5 @@ Mock.mock('/member/getCardDetail', /post/i, getCardDetail);
 Mock.mock('/order/getBookList', /post/i, getOrderList);
 Mock.mock('/business/getRoomTypeList', /post/i, getRoomTypeList);
 Mock.mock('/business/getRoomsByType', /post/i, getRoomsByType);
+Mock.mock('/guidance/getList', /post/i, getList);
+Mock.mock('/guidance/getAmount', /post/i, getAmount)

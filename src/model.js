@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
+import authPages from './config/auth';
 
 /** 
  * 获取service
@@ -85,6 +86,13 @@ export default {
             history.listen(location => {
                 const user = sessionStorage.getItem('currentUser');
                 const menu = sessionStorage.getItem('currentMenu');
+                const { withoutAuthPages } = authPages;
+                if(withoutAuthPages && withoutAuthPages.length > 0) {
+                    if(withoutAuthPages.find(item => location.pathname.includes(item))) {
+                        return;
+                    }
+                }
+
                 if(!location.pathname.includes('login') && !user) {
                     dispatch({
                         type: 'logout'
