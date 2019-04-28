@@ -4,7 +4,7 @@ import moment from 'moment';
 const Random = Mock.Random;
 
 const store  = {
-    amount: 100000,
+    amount: 10000000,
 }
 
 const getParam = req => {
