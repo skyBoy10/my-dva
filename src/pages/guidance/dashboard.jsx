@@ -55,13 +55,34 @@ class Dashboard extends Component {
 
     getDemoList = () => {
         const { guidance } = this.props;
-        const { demoList } = guidance;
+        const { demoList, oldList } = guidance;
+        let result = [];
         
-        return demoList.reverse();
+        if(oldList.length > 0) {
+            for(let i = 0; i < oldList.length; i += 1) {
+                for(let j = 0; j < demoList.length; j += 1) {
+                    if(oldList[i].id == demoList[j].id) {
+                        result.push({
+                            id: oldList[i].id,
+                            name: demoList[j].name,
+                            oldSort: oldList[i].sort,
+                            sort: demoList[j].sort,
+                        });
+                        break;
+                    }
+                }
+            }
+        } else {
+            result = demoList;
+        }
+        
+        console.log(result)
+        return result.reverse();
     }
 
     render() {
         const { guidance } = this.props;
+        const list = this.getDemoList();
 
         return (
             <div className='guid-dash'>
@@ -69,9 +90,11 @@ class Dashboard extends Component {
                 <CusSwiper />
                 <div className='ani-container'>
                     {
-                        guidance.demoList.map((item, index) => {
+                        list.length > 0 && list.map((item, index) => {
                             return (
-                                <div key={item.id} className={ `scroll${item.sort}` }>{item.name} - {item.sort}</div>
+                                <div key={index}>
+                                    <div key={item.id} className={ item.oldSort != item.sort && item.oldSort ? `item scroll${item.oldSort}_${item.sort}` : `item top-${item.sort}`}>{item.name} - {item.id} - {item.oldSort} - {item.sort}</div>
+                                </div>
                             );
                         })
                     }

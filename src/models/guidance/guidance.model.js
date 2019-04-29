@@ -6,6 +6,7 @@ export default {
     state: {
         list: [],
         amount: 0,
+        oldList: [],
         demoList: []
     },
 
@@ -82,6 +83,7 @@ export default {
         updateDemoList(state, action) {
             return {
                 ...state,
+                oldList: state.demoList,
                 demoList: action.data
             };
         }

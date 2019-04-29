@@ -7,7 +7,7 @@
         height: 400px;
         background-color: bisque;
 
-        div {
+        .item {
             position: absolute;
             left: 0;
             right: 0;
@@ -48,20 +48,116 @@
         }
     }
 
-    @keyframes move8{ 0%{top:0; left: -20px;} 100%{top: 350px; left: 0} }
-    @keyframes move7{ 0%{top:0; left: -20px;} 100%{top: 300px; left: 0} }
-    @keyframes move6{ 0%{top:0; left: -20px;} 100%{top: 250px; left: 0} }
-    @keyframes move5{ 0%{top:0; left: -20px;} 100%{top: 200px; left: 0} }
-    @keyframes move4{ 0%{top:0; left: -20px;} 100%{top: 150px; left: 0} }
-    @keyframes move3{ 0%{top:0; left: -20px;} 100%{top: 100px; left: 0} }
-    @keyframes move2{ 0%{top:0; left: -20px;} 100%{top: 50px; left: 0} }
-    @keyframes move1{ 0%{top:0; left: -20px;} 100%{top: 0;} }
-    .scroll8 {animation:2s move8 /*infinite*/ linear forwards }
-    .scroll7 {animation:2s move7 /*infinite*/ linear forwards }
-    .scroll6 {animation:2s move6 /*infinite*/ linear forwards }
-    .scroll5 {animation:2s move5 /*infinite*/ linear forwards }
-    .scroll4 {animation:2s move4 /*infinite*/ linear forwards }
-    .scroll3 {animation:2s move3 /*infinite*/ linear forwards }
-    .scroll2 {animation:2s move2 /*infinite*/ linear forwards }
-    .scroll1 {animation:2s move1 /*infinite*/ linear forwards }
+    @keyframes move8_7{ 0%{top: 350px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move8_6{ 0%{top: 350px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move8_5{ 0%{top: 350px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move8_4{ 0%{top: 350px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move8_3{ 0%{top: 350px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move8_2{ 0%{top: 350px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move8_1{ 0%{top: 350px; left: -20px;} 100%{top: 0; left: 0} }
+    @keyframes move7_8{ 0%{top: 300px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move7_6{ 0%{top: 300px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move7_5{ 0%{top: 300px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move7_4{ 0%{top: 300px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move7_3{ 0%{top: 300px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move7_2{ 0%{top: 300px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move7_1{ 0%{top: 300px; left: -20px;} 100%{top: 0; left: 0} }
+    @keyframes move6_8{ 0%{top: 250px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move6_7{ 0%{top: 250px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move6_5{ 0%{top: 250px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move6_4{ 0%{top: 250px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move6_3{ 0%{top: 250px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move6_2{ 0%{top: 250px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move6_1{ 0%{top: 250px; left: -20px;} 100%{top: 0; left: 0} }
+    @keyframes move5_8{ 0%{top: 200px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move5_7{ 0%{top: 200px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move5_6{ 0%{top: 200px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move5_4{ 0%{top: 200px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move5_3{ 0%{top: 200px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move5_2{ 0%{top: 200px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move5_1{ 0%{top: 200px; left: -20px;} 100%{top: 0; left: 0} }
+    @keyframes move4_8{ 0%{top: 150px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move4_7{ 0%{top: 150px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move4_6{ 0%{top: 150px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move4_5{ 0%{top: 150px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move4_3{ 0%{top: 150px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move4_2{ 0%{top: 150px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move4_1{ 0%{top: 150px; left: -20px;} 100%{top: 0px; left: 0} }
+    @keyframes move3_8{ 0%{top: 100px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move3_7{ 0%{top: 100px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move3_6{ 0%{top: 100px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move3_5{ 0%{top: 100px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move3_4{ 0%{top: 100px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move3_2{ 0%{top: 100px; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move3_1{ 0%{top: 100px; left: -20px;} 100%{top: 0px; left: 0} }
+    @keyframes move2_8{ 0%{top: 50px; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move2_7{ 0%{top: 50px; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move2_6{ 0%{top: 50px; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move2_5{ 0%{top: 50px; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move2_4{ 0%{top: 50px; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move2_3{ 0%{top: 50px; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move2_1{ 0%{top: 50px; left: -20px;} 100%{top: 0px; left: 0} }
+    @keyframes move1_8{ 0%{top: 0; left: -20px;} 100%{top: 350px; left: 0;} }
+    @keyframes move1_7{ 0%{top: 0; left: -20px;} 100%{top: 300px; left: 0;} }
+    @keyframes move1_6{ 0%{top: 0; left: -20px;} 100%{top: 250px; left: 0;} }
+    @keyframes move1_5{ 0%{top: 0; left: -20px;} 100%{top: 200px; left: 0;} }
+    @keyframes move1_4{ 0%{top: 0; left: -20px;} 100%{top: 150px; left: 0;} }
+    @keyframes move1_3{ 0%{top: 0; left: -20px;} 100%{top: 100px; left: 0;} }
+    @keyframes move1_2{ 0%{top: 0; left: -20px;} 100%{top: 50px; left: 0;} }
+    .scroll8_7 {animation:2s move8_7 /*infinite*/ linear forwards }
+    .scroll8_6 {animation:2s move8_6 /*infinite*/ linear forwards }
+    .scroll8_5 {animation:2s move8_5 /*infinite*/ linear forwards }
+    .scroll8_4 {animation:2s move8_4 /*infinite*/ linear forwards }
+    .scroll8_3 {animation:2s move8_3 /*infinite*/ linear forwards }
+    .scroll8_2 {animation:2s move8_2 /*infinite*/ linear forwards }
+    .scroll8_1 {animation:2s move8_1 /*infinite*/ linear forwards }
+    .scroll7_8 {animation:2s move7_8 /*infinite*/ linear forwards }
+    .scroll7_6 {animation:2s move7_6 /*infinite*/ linear forwards }
+    .scroll7_5 {animation:2s move7_5 /*infinite*/ linear forwards }
+    .scroll7_4 {animation:2s move7_4 /*infinite*/ linear forwards }
+    .scroll7_3 {animation:2s move7_3 /*infinite*/ linear forwards }
+    .scroll7_2 {animation:2s move7_2 /*infinite*/ linear forwards }
+    .scroll7_1 {animation:2s move7_1 /*infinite*/ linear forwards }
+    .scroll6_8 {animation:2s move6_8 /*infinite*/ linear forwards }
+    .scroll6_7 {animation:2s move6_7 /*infinite*/ linear forwards }
+    .scroll6_5 {animation:2s move6_5 /*infinite*/ linear forwards }
+    .scroll6_4 {animation:2s move6_4 /*infinite*/ linear forwards }
+    .scroll6_3 {animation:2s move6_3 /*infinite*/ linear forwards }
+    .scroll6_2 {animation:2s move6_2 /*infinite*/ linear forwards }
+    .scroll6_1 {animation:2s move6_1 /*infinite*/ linear forwards }
+    .scroll5_8 {animation:2s move5_8 /*infinite*/ linear forwards }
+    .scroll5_7 {animation:2s move5_7 /*infinite*/ linear forwards }
+    .scroll5_6 {animation:2s move5_6 /*infinite*/ linear forwards }
+    .scroll5_4 {animation:2s move5_4 /*infinite*/ linear forwards }
+    .scroll5_3 {animation:2s move5_3 /*infinite*/ linear forwards }
+    .scroll5_2 {animation:2s move5_2 /*infinite*/ linear forwards }
+    .scroll5_1 {animation:2s move5_1 /*infinite*/ linear forwards }
+    .scroll4_8 {animation:2s move4_8 /*infinite*/ linear forwards }
+    .scroll4_7 {animation:2s move4_7 /*infinite*/ linear forwards }
+    .scroll4_6 {animation:2s move4_6 /*infinite*/ linear forwards }
+    .scroll4_5 {animation:2s move4_5 /*infinite*/ linear forwards }
+    .scroll4_3 {animation:2s move4_3 /*infinite*/ linear forwards }
+    .scroll4_2 {animation:2s move4_2 /*infinite*/ linear forwards }
+    .scroll4_1 {animation:2s move4_1 /*infinite*/ linear forwards }
+    .scroll3_8 {animation:2s move3_8 /*infinite*/ linear forwards }
+    .scroll3_7 {animation:2s move3_7 /*infinite*/ linear forwards }
+    .scroll3_6 {animation:2s move3_6 /*infinite*/ linear forwards }
+    .scroll3_5 {animation:2s move3_5 /*infinite*/ linear forwards }
+    .scroll3_4 {animation:2s move3_4 /*infinite*/ linear forwards }
+    .scroll3_2 {animation:2s move3_2 /*infinite*/ linear forwards }
+    .scroll3_1 {animation:2s move3_1 /*infinite*/ linear forwards }
+    .scroll2_8 {animation:2s move2_8 /*infinite*/ linear forwards }
+    .scroll2_7 {animation:2s move2_7 /*infinite*/ linear forwards }
+    .scroll2_6 {animation:2s move2_6 /*infinite*/ linear forwards }
+    .scroll2_5 {animation:2s move2_5 /*infinite*/ linear forwards }
+    .scroll2_4 {animation:2s move2_4 /*infinite*/ linear forwards }
+    .scroll2_3 {animation:2s move2_3 /*infinite*/ linear forwards }
+    .scroll2_1 {animation:2s move2_1 /*infinite*/ linear forwards }
+    .scroll1_8 {animation:2s move1_8 /*infinite*/ linear forwards }
+    .scroll1_7 {animation:2s move1_7 /*infinite*/ linear forwards }
+    .scroll1_6 {animation:2s move1_6 /*infinite*/ linear forwards }
+    .scroll1_5 {animation:2s move1_5 /*infinite*/ linear forwards }
+    .scroll1_4 {animation:2s move1_4 /*infinite*/ linear forwards }
+    .scroll1_3 {animation:2s move1_3 /*infinite*/ linear forwards }
+    .scroll1_2 {animation:2s move1_2 /*infinite*/ linear forwards }
 }
