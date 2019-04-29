@@ -1,4 +1,67 @@
 .guid-dash {
     padding: 10px;
     background-color: #fff;
+
+    .ani-container {
+        position: relative;
+        height: 400px;
+        background-color: bisque;
+
+        div {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .top-1 {
+            top: 0;
+        }
+
+        .top-2 {
+            top: 50px;
+        }
+
+        .top-3 {
+            top: 100px;
+        }
+
+        .top-4 {
+            top: 150px;
+        }
+
+        .top-5 {
+            top: 200px;
+        }
+
+        .top-6 {
+            top: 250px;
+        }
+
+        .top-7 {
+            top: 300px;
+        }
+
+        .top-8 {
+            top: 350px;
+        }
+    }
+
+    @keyframes move8{ 0%{top:0; left: -20px;} 100%{top: 350px; left: 0} }
+    @keyframes move7{ 0%{top:0; left: -20px;} 100%{top: 300px; left: 0} }
+    @keyframes move6{ 0%{top:0; left: -20px;} 100%{top: 250px; left: 0} }
+    @keyframes move5{ 0%{top:0; left: -20px;} 100%{top: 200px; left: 0} }
+    @keyframes move4{ 0%{top:0; left: -20px;} 100%{top: 150px; left: 0} }
+    @keyframes move3{ 0%{top:0; left: -20px;} 100%{top: 100px; left: 0} }
+    @keyframes move2{ 0%{top:0; left: -20px;} 100%{top: 50px; left: 0} }
+    @keyframes move1{ 0%{top:0; left: -20px;} 100%{top: 0;} }
+    .scroll8 {animation:2s move8 /*infinite*/ linear forwards }
+    .scroll7 {animation:2s move7 /*infinite*/ linear forwards }
+    .scroll6 {animation:2s move6 /*infinite*/ linear forwards }
+    .scroll5 {animation:2s move5 /*infinite*/ linear forwards }
+    .scroll4 {animation:2s move4 /*infinite*/ linear forwards }
+    .scroll3 {animation:2s move3 /*infinite*/ linear forwards }
+    .scroll2 {animation:2s move2 /*infinite*/ linear forwards }
+    .scroll1 {animation:2s move1 /*infinite*/ linear forwards }
 }

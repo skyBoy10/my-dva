@@ -5,6 +5,7 @@ const Random = Mock.Random;
 
 const store  = {
     amount: 10000000,
+    list: []
 }
 
 const getParam = req => {
@@ -51,7 +52,7 @@ export const getList = param => {
 };
 
 export const getAmount = param => {
-    const temp = store.amount + Random.natural(1, 10);
+    const temp = store.amount + Random.natural(1, 100);
     store.amount = temp;
 
     return {
@@ -61,4 +62,53 @@ export const getAmount = param => {
             amount: temp,
         }
     };
+};
+
+const initStore = () => {
+    const list = [];
+
+    for(let i = 0; i < 8; i += 1) {
+        list.push({
+            id: Random.id(),
+            sort: i + 1,
+            name: Random.cname(),
+        })
+    }
+
+    store.list = list;
+}
+
+export const getTList = param => {
+    const { list } = store;
+
+    if(!list || list.length <= 0) {
+        initStore();
+    }
+
+    return {
+        code: '0',
+        message: '',
+        data: {
+            list: store.list,
+        }
+    };
+}
+
+export const updateSort = param => {
+    const index = Random.natural(0, 7);
+
+    const first = store.list[0];
+    const other = store.list[index];
+    first.sort = other.sort;
+    other.sort = 1;
+    store.list[0] = other;
+    store.list[index] = first;
+
+    return {
+        code: 0,
+        message: '',
+        data: {
+            list: store.list
+        }
+    }
 }

@@ -6,6 +6,7 @@ export default {
     state: {
         list: [],
         amount: 0,
+        demoList: []
     },
 
     subscriptions: {},
@@ -31,7 +32,29 @@ export default {
                     data: res.amount,
                 })
             }
-        }
+        },
+
+        * getTList(action, { call, put }) {
+            const res = yield call(cusHttp.post, '/guidance/getTList', action.data);
+
+            if(res && res.list.length > 0) {
+                yield put({
+                    type: 'getDemoList',
+                    data: res.list,
+                });
+            }
+        },
+
+        * updateSort(action, { call, put }) {
+            const res = yield call(cusHttp.post, '/guidance/updateSort', action.data);
+
+            if(res && res.list.length > 0) {
+                yield put({
+                    type: 'updateDemoList',
+                    data: res.list,
+                });
+            }
+        },
     },
 
     reducers: {
@@ -47,6 +70,20 @@ export default {
                 ...state,
                 amount: action.data,
             }
+        },
+
+        getDemoList(state, action) {
+            return {
+                ...state,
+                demoList: action.data
+            }
+        },
+
+        updateDemoList(state, action) {
+            return {
+                ...state,
+                demoList: action.data
+            };
         }
     }
 }

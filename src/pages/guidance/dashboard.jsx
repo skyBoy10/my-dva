@@ -9,14 +9,16 @@ import './dashboard.less';
 class Dashboard extends Component {
     componentDidMount() {
         this.getAmount();
-        this.count = 60;
+        this.getTList();
+        this.count = 100;
 
         const timer = setInterval(() => {
             if(this.count <= 0) {
                 clearInterval(timer);
             }
-            
+
             this.getAmount();
+            this.updateSort();
             this.count--;
         }, 5000);
     }
@@ -33,6 +35,31 @@ class Dashboard extends Component {
         });
     }
 
+    getTList = () => {
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'guidance/getTList',
+            data: '',
+        });
+    }
+
+    updateSort = () => {
+        const { dispatch } = this.props;
+
+        dispatch({
+            type: 'guidance/updateSort',
+            data: '',
+        });
+    }
+
+    getDemoList = () => {
+        const { guidance } = this.props;
+        const { demoList } = guidance;
+        
+        return demoList.reverse();
+    }
+
     render() {
         const { guidance } = this.props;
 
@@ -40,6 +67,15 @@ class Dashboard extends Component {
             <div className='guid-dash'>
                 <CusAmount amount={guidance.amount} />
                 <CusSwiper />
+                <div className='ani-container'>
+                    {
+                        guidance.demoList.map((item, index) => {
+                            return (
+                                <div key={item.id} className={ `scroll${item.sort}` }>{item.name} - {item.sort}</div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         );
     }

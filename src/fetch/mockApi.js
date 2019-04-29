@@ -3,7 +3,7 @@ import moment from 'moment';
 import { getTabMenus, getMemList, getLabels, getMemLevels, updateLabel, getDetail, getCardDetail } from './member.api';
 import { getOrderList } from './order.api';
 import { getRoomTypeList, getRoomsByType } from  './business.api';
-import { getList, getAmount } from './guidance.api';
+import { getList, getAmount, getTList, updateSort } from './guidance.api';
 
 const Random = Mock.Random;
 
@@ -646,4 +646,6 @@ Mock.mock('/order/getBookList', /post/i, getOrderList);
 Mock.mock('/business/getRoomTypeList', /post/i, getRoomTypeList);
 Mock.mock('/business/getRoomsByType', /post/i, getRoomsByType);
 Mock.mock('/guidance/getList', /post/i, getList);
-Mock.mock('/guidance/getAmount', /post/i, getAmount)
+Mock.mock('/guidance/getAmount', /post/i, getAmount);
+Mock.mock('/guidance/getTList', /post/i, getTList)
+Mock.mock('/guidance/updateSort', /post/i, updateSort)
