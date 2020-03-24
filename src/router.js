@@ -24,6 +24,12 @@ const RouterCon = ({ history, app }) => {
     component: () => import('./pages/guidance/dashboard')
   });
 
+  const TempCom = dynamic({
+    app,
+    models: () => [ ],
+    component: () => import('./pages/temp/temp')
+  });
+
   const routes = [
     {
         path: '/app/dashboard',
@@ -148,25 +154,26 @@ const RouterCon = ({ history, app }) => {
 
   return (
     <LocaleProvider locale={zhCN}>
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path='/' component={login} exact />
-        <Route path='/login' component={login} exact />
-        <Route path='/guidance/dashboard' component={GuidDashboard} exact />
-        <Route path='/app' render={() => 
-        <Layout className='h-full w-full'>
-            <CusMenu />
-            <Layout>
-                <Top />
-                <Content className='scroll-y pos-r'>
-                  {renderRoutes(routes)}
-                </Content>
-            </Layout>
-        </Layout>
-        }/>
-        <Redirect to='/login'/>
-      </Switch>
-    </ConnectedRouter>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path='/' component={login} exact />
+          <Route path='/login' component={login} exact />
+          <Route path='/guidance/dashboard' component={GuidDashboard} exact />
+          <Route path='/temp' component={TempCom} exact />
+          <Route path='/app' render={() => 
+          <Layout className='h-full w-full'>
+              <CusMenu />
+              <Layout>
+                  <Top />
+                  <Content className='scroll-y pos-r'>
+                    {renderRoutes(routes)}
+                  </Content>
+              </Layout>
+          </Layout>
+          }/>
+          <Redirect to='/login'/>
+        </Switch>
+      </ConnectedRouter>
     </LocaleProvider>
   );
 }

@@ -113,7 +113,7 @@ export const getTabMenus = req => {
     const param = getParam(req);
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: [
             {
@@ -190,7 +190,7 @@ const initMemList = param => {
 */
 export const getMemLevels = param => {
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: memStore.levelList,
     };
@@ -234,7 +234,7 @@ export const getLabels = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             total: labelList.length,
@@ -288,7 +288,7 @@ export const getMemList = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             total: memList ? memList.length : 0,
@@ -324,7 +324,7 @@ export const updateLabel = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: true,
     };
@@ -359,7 +359,7 @@ export const getDetail = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             detail: currentMember,
@@ -381,7 +381,7 @@ export const getCardDetail = req => {
     const param = getParam(req);
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             id: Random.id(),

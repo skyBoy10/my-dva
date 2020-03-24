@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 /** 
  * 性别处理
 */
@@ -227,7 +229,8 @@ export const permute = input => {
 };
 
 /** 
- * 数组扁平化，[1, [2, 3, 5], [[3, 4]], []]
+ * 数组扁平化，[1, [2, 3, 5], [[3, 4]], [];
+ * 数组的扁平化还可以直接使用toString方法
 */
 export const flatten = (arr, result = []) => {
     for (let item of arr) {
@@ -240,11 +243,231 @@ export const flatten = (arr, result = []) => {
     return result;
 }
 
-/** 
- * 数组扁平化，利用es6的reduce
-*/
-function flattenEs6(arr) {
-    return arr.reduce((flat, toFlatten) => {
-        return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+/**
+ * 使用es6对数组进行扁平化
+ * @param {*} arr 
+ */
+export const cusFlattenArr = arr => {
+    if (arr && arr.length === 0) {
+        return [];
+    }
+
+    return arr.reduce((pre, item) => {
+        return pre.concat(Array.isArray(item) ? cusFlattenArr(item) : item);
     }, []);
 }
+
+Array.prototype.cusFilter = (fn) => {
+    const arr = this;
+    const len = arr.length;
+    const result = [];
+    for (let i = 0; i < len; i += 1) {
+        if (fn(arr[i], i, arr)) {
+            result.push(arr[i]);
+        }
+    }
+
+    return result;
+}
+
+/*
+    判断一个变量的类型，包括基础数据类型，引用类型；typeof 对基础数据类型还好用，但是对引用类型就不行，对象返回的全是“object”，函数返回的是“function”；
+    所以，对引用类型一般都用，instanceof，他的实现原理是根据原型链查找；
+    也可以通过原生js的一个api进行判断，Object.prototype.toString.call(变量)；
+ */
+
+ /**
+  * 防抖
+  */
+
+function douce (fn, delay = 1000) {
+    let timer;
+
+    return () => {
+        if (timer) {
+            clearTimeout(timer);
+        }
+    
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+        }, delay);
+    };
+}
+
+/**
+ * 节流
+ */
+
+function throttle (fn, delay = 1000) {
+    let timer;
+
+    return () => {
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(this, arguments);
+                timer = null;
+            }, delay);
+        }
+    }
+}
+
+/**
+ * 不使用Generator创建迭代器，创建自定义迭代器
+ */
+
+ function cusIterator(arr = []) {
+     let index = 0;
+
+     return {
+         next: () => {
+            const done = index >= arr.length;
+            const value = !done ? arr[index++] : undefined;
+
+            return {
+                done,
+                value
+            };
+         }
+     };
+ }
+
+/**
+ * 深度优先遍历，首先从一个违背访问的节点v，依次遍历所有和该节点相通深度优先的节点，直至都被访问。
+ * 然后往复循环另一个未被访问的节点。实现如下
+ */
+
+ function deepRecursion(nodes, result = []) {
+    if (nodes) {
+        const children = nodes.children;
+        result.push(nodes);
+
+        for (let i = 0; i < children.length; i += 1) {
+            if (children[i].children) {
+                deepRecursion(children[i].children, result);
+                return;
+            }
+
+            result.push(children[i].children);
+        }
+    }
+
+    return result;
+ }
+
+ /**
+  * ajax的原生写法
+  */
+
+ export const cusAjax = () => {
+    return {
+        get: (url, fn) => {
+            const req = new XMLHttpRequest();
+            req.open('GET', url, true);
+            req.onreadystatechange = () => {
+                // readyState值为4说明已经完成请求
+                if (req.readyState === 4 && req.status === 200 || req.status === 304) {
+                    fn.call(this, req.responseText);
+                }
+            };
+
+            req.send();
+        },
+        post: (url, param, fn) => {
+            const req = new XMLHttpRequest();
+            req.open("POST", url, true);
+            req.setRequestHeader("Content-Type", "application/json;utf-8");
+            
+            req.onreadystatechange = () => {
+                // readyState值为4说明已经完成请求
+                if (req.readyState === 4 && req.status === 200 || req.status === 304) {
+                    fn.call(this, req.responseText);
+                }
+            };
+
+            req.send(param);
+        }
+    };
+ }
+
+ /**
+  * 函数的柯里化，柯里化又称部分求值，字面意思就是不会立刻求值，而是到了需要的时候再去求值。a(1,3)(2)
+  * 得到的值是6；其中arguments.callee返回的是当前执行函数的函数体；匿名函数经常使用；
+  */
+ const sum = function() { 
+    let arrs = [];
+    return function() {
+        if (arguments.length === 0) {
+            if (arrs.length === 0) {
+              return 0;
+          }
+  
+          return arrs.reduce((pre, item) => { return pre + item; });
+      }
+      
+      arrs.push(...arguments);
+      return arguments.callee;
+    };
+  }
+
+
+  /**
+   * 深copy
+   */
+
+  function deepClone(source) {
+    if (typeof source !== 'object' || source == null) {
+      return source;
+    }
+    
+    const target = Array.isArray(source) ? [] : {};
+    for (const key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        if (typeof source[key] === 'object' && source[key] !== null) {
+          target[key] = deepClone(source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  }
+
+  /**
+   * 下面的涉及到this的指向，this根据的指向，根据this所在执行环境决定，不过函数内部的变量，是根据函数声明所在的环境决定；
+   */
+var inner = '0-1';
+function say() { 
+  console.log(inner);
+  console.log(this.inner);
+};
+
+var obj1 = (function() { 
+  var inner = '1-1';
+  return { 
+    inner: '1-2',
+    say: function() { 
+      console.log(inner);
+      console.log(this.inner);
+    }
+  };
+})();
+
+var obj2 = (function() { 
+  var inner = '2-1';
+  return { 
+    inner: '2-2',
+    say: function() { 
+      console.log(inner);
+      console.log(this.inner);
+    }
+  }
+})();
+
+
+say();
+obj1.say();
+obj2.say();
+obj1.say = say;
+obj1.say();
+obj1.say = obj2.say;
+obj1.say();

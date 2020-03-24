@@ -1,5 +1,5 @@
 export default {
-    proxy: {
+  proxy: {
     "/api/": {
       //target: "http://11.167.57.6:7001/gid/",
       "target": "http://127.0.0.1:8000",
@@ -11,6 +11,11 @@ export default {
   },
   theme: {
     "primary-color": "#00C1DE",
+  },
+  define: {
+    'process.env': {
+      ENV: process.env.ENV || 'dev',
+    }
   },
   "extraBabelPlugins": [
       ["import", {

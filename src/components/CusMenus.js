@@ -35,7 +35,7 @@ class cusMenu extends Component {
                             return (
                                 <Menu.Item key={item.nickName}>
                                     <Link key={item.url} to={item.url} onClick={this.handleClick.bind(this, item)}>
-                                        <Icon type={item.type} />
+                                        <Icon type={item.iconType} />
                                         <span>{item.name}</span>
                                     </Link>
                                 </Menu.Item>

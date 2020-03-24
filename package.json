@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "roadhog server",
-    "build": "roadhog build",
+    "start": "cross-env ENV=dev roadhog server",
+    "build": "cross-env ENV=test roadhog build",
+    "pro": "cross-env ENV=pro roadhog build",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint"
   },
@@ -12,6 +13,7 @@
     "echarts": "^4.2.0-rc.2",
     "echarts-for-react": "^2.0.15-beta.0",
     "immutable": "^4.0.0-rc.12",
+    "md5": "^2.2.1",
     "moment": "^2.22.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -21,6 +23,7 @@
     "antd": "^3.10.4",
     "babel-plugin-dva-hmr": "^0.3.2",
     "babel-plugin-import": "^1.11.0",
+    "cross-env": "^5.2.0",
     "dva-loading": "^2.0.6",
     "eslint": "^4.14.0",
     "eslint-config-umi": "^0.1.1",

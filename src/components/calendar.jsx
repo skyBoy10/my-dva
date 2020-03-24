@@ -189,7 +189,7 @@ class Calendar extends PureComponent {
                             return (
                                 <span key={item.date} 
                                 onClick={this.onClickCell.bind(this, item)}
-                                className={item.isCurrent ? (item.date == currentDate ? 'cell item active' : 'cell item enabled') : 'cell item disabled'}>
+                                className={item.isCurrent ? (item.date === currentDate ? 'cell item active' : 'cell item enabled') : 'cell item disabled'}>
                                     <div>{item.value}</div>
                                     <div className='txt-right txt-bold'>{formatMoney(item.price, 1, 2)}</div>
                                     <div className='txt-right'>可住{item.enabledRooms || '0'}间/共{item.total || '0'}间</div>

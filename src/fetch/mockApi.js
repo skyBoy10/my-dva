@@ -56,16 +56,19 @@ const getParam = req => {
 const login = (req) => {
     const enableUser = {
         username: 'admin',
-        password: '123456',
+        password: 'e10adc3949ba59abbe56e057f20f883e', // 123456
         isAdmin: true
     };
     const param = getParam(req);
 
-    if(param.username === enableUser.username && param.password === enableUser.password) {
+    if(param.account === enableUser.username && param.password === enableUser.password) {
         return {
-            code: '0',
+            code: '200',
             message: '',
-            data: enableUser
+            data: {
+                user: enableUser,
+                token: '',
+            }
         };
     }
 
@@ -88,61 +91,61 @@ const getMenus = (req) => {
             name: '概况',
             nickName: 'dashboard',
             url: '/app/dashboard',
-            type: 'home'
+            iconType: 'home'
         },
         {
             id: Random.id(),
             name: '房态图',
             nickName: 'roommap',
             url: '/app/room/map',
-            type: 'schedule'
+            iconType: 'schedule'
         },
         {
             id: Random.id(),
             name: '业务',
             nickName: 'business',
             url: '/app/business/roomTypes',
-            type: 'desktop'
+            iconType: 'desktop'
         },
         {
             id: Random.id(),
             name: '订单',
             nickName: 'order',
             url: '/app/order/bookList',
-            type: 'solution'
+            iconType: 'solution'
         },
         {
             id: Random.id(),
             name: '营销',
             nickName: 'market',
             url: '/app/market',
-            type: 'inbox'
+            iconType: 'inbox'
         },
         {
             id: Random.id(),
             name: '会员管理',
             nickName: 'member',
             url: '/app/member/list',
-            type: 'user'
+            iconType: 'user'
         },
         {
             id: Random.id(),
             name: '数据统计',
             nickName: 'statistics',
             url: '/app/statistics',
-            type: 'line-chart'
+            iconType: 'line-chart'
         },
         {
             id: Random.id(),
             name: '用户管理',
             nickName: 'users',
             url: '/app/users',
-            type: 'team'
+            iconType: 'team'
         }
     ];
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: menus
     };
@@ -185,7 +188,7 @@ const getTreeNode = (req) => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: nodeList
     }
@@ -248,7 +251,7 @@ const getUsersByCity = req => {
     
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             total: userList.length,
@@ -443,7 +446,7 @@ const getAllDeps = req => {
     ];
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: list
     };
@@ -454,7 +457,7 @@ const getAllDeps = req => {
 */
 const deleteUser = req => {
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: true
     }
@@ -465,7 +468,7 @@ const deleteUser = req => {
 */
 const editUser = req => {
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: true,
     };
@@ -478,7 +481,7 @@ const getStatisticsTotal = req => {
     const param = getParam(req);
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             revenueFee: Random.float(1000, 10000000, 0, 3),
@@ -531,7 +534,7 @@ const getReportData = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             lineData: result,
@@ -614,7 +617,7 @@ const getListData = req => {
     
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             total: list.length,
@@ -624,7 +627,7 @@ const getListData = req => {
 }
 
 Mock.mock('/login', /post/i, login);
-Mock.mock('/getMenus', /post/i, getMenus);
+Mock.mock('/menus/getMenus', /post/i, getMenus);
 Mock.mock('/user/getTreeNodes', /post/i, getTreeNode);
 Mock.mock('/user/getUserList', /post/i, getUsersByCity);
 Mock.mock('/user/addUser', /post/i, addUser);

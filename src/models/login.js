@@ -1,5 +1,6 @@
 import * as loginService from  '../services/login.service';
 import { routerRedux } from 'dva/router';
+import md5 from 'md5';
 
 export default {
     namespace: 'login',
@@ -12,16 +13,21 @@ export default {
 
     effects: {
         *login(action, { call, put, select, take }) {
-            const res = yield call(loginService.login, action.data);
+            const param = {
+                account: action.data.username,
+                password: md5(action.data.password, 32)
+            }
+            const res = yield call(loginService.login, param);
             
             if(res) {
                 yield put({
                     type: 'updateCurrentUser',
                     data: {
-                        ...res
+                        ...res.user
                     }
                 });
 
+                localStorage.setItem('_auth_token_', res.token);
                 yield take('base/updateMenus');
                 const menus = yield select(state => state.base.menus);
                 yield put(routerRedux.push(menus[0].url));

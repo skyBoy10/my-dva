@@ -1,3 +1,3 @@
 export default {
-    withoutAuthPages: [ '/guidance/dashboard', '/login' ]
+    withoutAuthPages: [ '/guidance/dashboard', '/login', 'temp' ]
 }

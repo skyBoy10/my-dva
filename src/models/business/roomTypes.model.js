@@ -75,6 +75,14 @@ export default {
                     data:  res,
                 });
             }
+        },
+
+        * updateRoomType(action, { call, put }) {
+            yield call(post, '/business/roomType/create', action.data);
+        },
+
+        * uploadFile(action, { call, put }) {
+            yield call(post, '/common/upload', action.data);
         }
     },
 }

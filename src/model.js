@@ -20,7 +20,7 @@ export default {
         * listenAction(action, { call, put, take }) {
             yield take('login/updateCurrentUser'); //监听action
             const param = JSON.parse(sessionStorage.getItem('currentUser'));
-            const res = yield call(getMenus, param);
+            const res = yield call(getMenus, '');
             if(res) {
                 yield put({ type: 'updateMenus', data: res });
             }
@@ -32,7 +32,7 @@ export default {
             const { menus } = yield select(state => state.base.menus);
             if(menus && menus.length > 0) return;
             const param = JSON.parse(sessionStorage.getItem('currentUser'));
-            const res = yield call(getMenus, param);
+            const res = yield call(getMenus, '');
             if(res) {
                 yield put({ type: 'updateMenus', data: res });
             }

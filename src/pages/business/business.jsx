@@ -13,6 +13,7 @@ import './business.less';
 import SubMenus from '../../components/leftMenu';
 import BreadLine from '../../components/breadLine';
 import RoomTypes from './components/roomTypes';
+import RoomTypeEdit from './components/roomType.edit'
 import RoomPrice from './components/roomPrice';
 
 @connect(({ loading, business }) => ({ loading, business }))
@@ -34,6 +35,7 @@ class Business extends PureComponent {
                         <div className='pos-ab h-full w-full'>
                             <Switch>
                                 <Route exact path='/app/business/roomTypes' component={RoomTypes} />
+                                <Route exact path='/app/business/roomTypes/edit' component={RoomTypeEdit} />
                                 <Route exact path='/app/business/roomPrice' component={RoomPrice} />
                                 <Redirect to='/app/exception/404' />
                             </Switch>

@@ -88,7 +88,7 @@ export const getRoomTypeList = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: {
             total: memList ? memList.length : 0,
@@ -122,7 +122,7 @@ export const getRoomsByType = req => {
     }
 
     return {
-        code: '0',
+        code: '200',
         message: '',
         data: room,
     };

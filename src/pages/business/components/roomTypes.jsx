@@ -11,17 +11,23 @@ import './roomTypes.less';
 import { formatMoney } from '../../../utils/tools';
 
 const SearchForm = props => {
-    const { checkedIds, deleteGroup } = props;
+    const { checkedIds, deleteGroup, updateRoomType } = props;
 
     const search = (e, val) => {
         e && e.preventDefault();
         console.log(val);
     }
 
+    const addRoomType = () => {
+        if(updateRoomType && typeof(updateRoomType) == 'function') {
+            updateRoomType();
+        }
+    }
+
     return (
         <div className='search'>
             <span className='leftItem'>
-                <Button type='default'>新增房型</Button>
+                <Button type='default' onClick={addRoomType}>新增房型</Button>
             </span>
             <span className='leftItem'>
                 <Button type='default' onClick={deleteGroup} disabled={checkedIds.length <= 0}>批量删除</Button>
@@ -39,12 +45,12 @@ const ListItem = props => {
 
     return (
         <div className='listItem' style={(index % 2) ? {} : { backgroundColor: '#f5f5f5' }}>
-            <span className='item w-1 fir'><Checkbox value={roomType.id} /></span>
-            <span className='item w-1-5'>{roomType.roomTypeName || '--'}</span>
-            <span className='item w-1-5'>{formatMoney(roomType.price, 1, 2) || '--'}</span>
+            <span className='item w-1 fir'><Checkbox value={roomType.roomTypeId} /></span>
+            <span className='item w-1-5'>{roomType.name || '--'}</span>
+            <span className='item w-1-5'>{formatMoney(roomType.rackRate, 1, 2) || '--'}</span>
             <span className='item w-1-5'>{formatMoney(roomType.deposit, 1, 2) || '--'}</span>
             <span className='item w-1-5'>{roomType.num || '--'}</span>
-            <span className='item w-1'>{roomType.order || '--'}</span>
+            <span className='item w-1'>{roomType.checkinNum || '--'}</span>
             <span className='item w-2'>
                 <a className='m-r-10'>编辑</a>
                 <a className='m-r-10'>设置房号</a>
@@ -125,6 +131,15 @@ class RoomTypes extends PureComponent {
         });
     }
 
+    /**
+     * 跳转编辑房型页面
+     */
+    updateRoomType = () => {
+        const { history } = this.props;
+
+        history.push({ pathname: "/app/business/roomTypes/edit", state: {} });
+    }
+
     /** 
      * 批量删除
     */
@@ -153,7 +168,7 @@ class RoomTypes extends PureComponent {
     }
 
     render() {
-        const { roomTypeModel } = this.props;
+        const { roomTypeModel, history } = this.props;
         const CheckGroup = Checkbox.Group;
         const pageConfig = {
             total: roomTypeModel.total,
@@ -182,7 +197,7 @@ class RoomTypes extends PureComponent {
             <div className='roomTypes'>
                 <div className='item_0 m-b-10'>
                     <SearchForm checkedIds={roomTypeModel.checkedIds} 
-                        deleteGroup={this.deleteGroup}
+                        deleteGroup={this.deleteGroup} updateRoomType={this.updateRoomType}
                     />
                 </div>
                 <div className='item_1 flex-col list'>
@@ -195,7 +210,7 @@ class RoomTypes extends PureComponent {
                             <span className='item w-1-5'>市场价（元）</span>
                             <span className='item w-1-5'>押金（元）</span>
                             <span className='item w-1-5'>房间数量</span>
-                            <span className='item w-1'>排序</span>
+                            <span className='item w-1'>可入住人数</span>
                             <span className='item w-2'>操作</span>
                             <span className='clear'></span>
                         </div>

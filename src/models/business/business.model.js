@@ -22,6 +22,13 @@ const initState = () => {
                 isMenu: false,
             },
             {
+                key: '1012',
+                name: '房型编辑',
+                url: '/app/business/roomTypes/edit',
+                parentKey: '101',
+                isMenu: false,
+            },
+            {
                 key: '102',
                 name: '房号管理',
                 url: '/app/business/roomNos',
